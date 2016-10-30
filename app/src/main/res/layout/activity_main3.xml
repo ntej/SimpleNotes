@@ -8,6 +8,17 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="www.ntej.com.simplenotes.Main3Activity">
+    tools:context="www.ntej.com.simplenotes.Main3Activity"
+    android:background="@color/colorTheme">
+
+
+    <EditText
+        android:id="@+id/notepad"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textAlignment="textStart"
+        android:gravity="start"
+        android:padding="10dp"
+        android:background="#ffffff"/>
 
 </RelativeLayout>
