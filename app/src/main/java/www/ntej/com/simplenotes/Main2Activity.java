@@ -23,6 +23,11 @@ public class Main2Activity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
+       saveTextToDB();
+    }
+
+    public void saveTextToDB()
+    {
         DatabaseHandler dba = new DatabaseHandler(getApplicationContext());
 
         String notepadtext =text.getText().toString();

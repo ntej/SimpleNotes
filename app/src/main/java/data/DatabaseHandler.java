@@ -61,39 +61,39 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
 
     }
 
-    public String getNoteText(String id)
-    {
-
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String[] projection = {
-                NotepadContract.NotepadEntry._ID,
-                NotepadContract.NotepadEntry.COLUMN_NAME_CONTENT,
-                NotepadContract.NotepadEntry.DATE
-        };
-
-        String selection = NotepadContract.NotepadEntry._ID + " = ? ";
-        String[] selectionArgs = {id};
-
-        String sortOrder = NotepadContract.NotepadEntry.DATE + " DESC";
-
-        Cursor c = db.query(
-                NotepadContract.NotepadEntry.TABLE_NAME,
-                projection,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                sortOrder
-        );
-
-        c.moveToFirst();
-
-        String textAtId = c.getString(c.getColumnIndexOrThrow(NotepadContract.NotepadEntry.COLUMN_NAME_CONTENT));
-
-        return textAtId;
-
-    }
+//    public String getNoteText(String id)
+//    {
+//
+//        SQLiteDatabase db = this.getReadableDatabase();
+//
+//        String[] projection = {
+//                NotepadContract.NotepadEntry._ID,
+//                NotepadContract.NotepadEntry.COLUMN_NAME_CONTENT,
+//                NotepadContract.NotepadEntry.DATE
+//        };
+//
+//        String selection = NotepadContract.NotepadEntry._ID + " = ? ";
+//        String[] selectionArgs = {id};
+//
+//        String sortOrder = NotepadContract.NotepadEntry.DATE + " DESC";
+//
+//        Cursor c = db.query(
+//                NotepadContract.NotepadEntry.TABLE_NAME,
+//                projection,
+//                selection,
+//                selectionArgs,
+//                null,
+//                null,
+//                sortOrder
+//        );
+//
+//        c.moveToFirst();
+//
+//        String textAtId = c.getString(c.getColumnIndexOrThrow(NotepadContract.NotepadEntry.COLUMN_NAME_CONTENT));
+//
+//        return textAtId;
+//
+//    }
 
 
     public ArrayList<NotepadContent> getNotesObjectsAsList()
@@ -142,6 +142,27 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
 
         return noteslist;
 
+
+    }
+
+    public void upDateNoteText(int _id, String updatedtext)
+    {
+        String id = Integer.toString(_id);
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(NotepadContract.NotepadEntry.COLUMN_NAME_CONTENT,updatedtext);
+        values.put(NotepadContract.NotepadEntry.DATE,System.currentTimeMillis());
+
+        String selection = NotepadContract.NotepadEntry._ID + " LIKE ?";
+        String[] selectionArgs = { id };
+
+        db.update(NotepadContract.NotepadEntry.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+
+        db.close();
 
     }
 

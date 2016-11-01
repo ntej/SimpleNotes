@@ -4,9 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -17,6 +17,8 @@ import model.NotepadContent;
 public class MainActivity extends AppCompatActivity {
 
     private ListView noteslistview;
+
+    ArrayList<NotepadContent> noteslistobjects = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,27 +39,22 @@ public class MainActivity extends AppCompatActivity {
         });
 
         noteslistview = (ListView) findViewById(R.id.noteslist);
-        displayList();
+        Refresh();
+
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    private void Refresh() {
 
-        displayList();
-    }
-
-    private void displayList() {
+        noteslistobjects.clear(); //mandatory for notifyDataSetCahged() to work
 
         DatabaseHandler dba = new DatabaseHandler(getApplicationContext());
-
-        ArrayList<NotepadContent> noteslistobjects;
 
         noteslistobjects = dba.getNotesObjectsAsList();
 
         CustomListViewAdapter adapter = new CustomListViewAdapter(getApplicationContext(), R.layout.listrow, noteslistobjects);
 
         noteslistview.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
     }
 

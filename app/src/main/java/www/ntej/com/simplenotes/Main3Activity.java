@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import data.DatabaseHandler;
 import model.NotepadContent;
 
 public class Main3Activity extends AppCompatActivity {
@@ -12,6 +13,8 @@ public class Main3Activity extends AppCompatActivity {
     private EditText text2;
     int noteId;
     String noteDate;
+    String noteText;
+    String updatedNoteText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,15 +26,39 @@ public class Main3Activity extends AppCompatActivity {
 
         NotepadContent notepadObject = (NotepadContent) getIntent().getSerializableExtra("userObj");
 
-        text2.setText(notepadObject.getText());
+        noteText = notepadObject.getText();
         noteId = notepadObject.getId();
         noteDate = notepadObject.getDate();
 
-        Toast.makeText(this, "ID:"+noteId+"Date:"+noteDate , Toast.LENGTH_SHORT).show();
+
+        text2.setText(noteText);
+
+
+
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() {
+        super.onStop();
+
+        upDateTextToDB();
+
+    }
+
+    public void upDateTextToDB()
+    {
+        updatedNoteText = text2.getText().toString();
+
+        if(updatedNoteText==noteText){
+           // Toast.makeText(this, "Nothing to upadate to DB ", Toast.LENGTH_SHORT).show();
+        }
+
+        else
+        {
+            DatabaseHandler dba = new DatabaseHandler(getApplicationContext());
+            dba.upDateNoteText(noteId,updatedNoteText);
+           // Toast.makeText(this, "Updated to DB", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
