@@ -35,7 +35,7 @@ public class Main3Activity extends AppCompatActivity {
         noteDate = notepadObject.getDate();
 
 
-        text2.setText(noteText); //
+        text2.setText(noteText);
 
 
 
