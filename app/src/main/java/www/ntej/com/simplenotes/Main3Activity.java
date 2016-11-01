@@ -1,8 +1,13 @@
 package www.ntej.com.simplenotes;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import data.DatabaseHandler;
@@ -21,7 +26,6 @@ public class Main3Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
 
-
         text2 = (EditText)findViewById(R.id.notepad2);
 
         NotepadContent notepadObject = (NotepadContent) getIntent().getSerializableExtra("userObj");
@@ -38,12 +42,40 @@ public class Main3Activity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-
+    protected void onPause() {
+        super.onPause();
         upDateTextToDB();
-
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.activity3menu,menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.deletebutton:
+
+                DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
+
+                dbh.deleteText(noteId);
+
+                startActivity(new Intent(Main3Activity.this,MainActivity.class));
+
+                finish();
+                MainActivity.h.sendEmptyMessage(0);
+
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     public void upDateTextToDB()
     {
@@ -55,10 +87,11 @@ public class Main3Activity extends AppCompatActivity {
 
         else
         {
-            DatabaseHandler dba = new DatabaseHandler(getApplicationContext());
-            dba.upDateNoteText(noteId,updatedNoteText);
+            DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
+            dbh.upDateNoteText(noteId,updatedNoteText);
            // Toast.makeText(this, "Updated to DB", Toast.LENGTH_SHORT).show();
         }
 
     }
 }
+

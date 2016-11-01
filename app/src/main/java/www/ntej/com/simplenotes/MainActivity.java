@@ -6,7 +6,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.os.Handler;
+import android.os.Message;
 
 import java.util.ArrayList;
 
@@ -17,13 +18,16 @@ import model.NotepadContent;
 public class MainActivity extends AppCompatActivity {
 
     private ListView noteslistview;
+    public static Handler h;
 
     ArrayList<NotepadContent> noteslistobjects = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
       //  Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
       //  setSupportActionBar(toolbar);
@@ -39,20 +43,56 @@ public class MainActivity extends AppCompatActivity {
         });
 
         noteslistview = (ListView) findViewById(R.id.noteslist);
-        Refresh();
+        refresh();
+
+        //to finish this activity from stack after performing delete in Main3Activity
+        h = new Handler() {
+            public void  handleMessage(Message msg)
+            {
+                super.handleMessage(msg);
+
+                switch(msg.what) {
+
+                    case 0:
+                        finish();
+                        break;
+
+                }
+            }
+        };
 
     }
 
-    private void Refresh() {
+    @Override
+    protected void onStart() {
+        super.onStart();
+        refresh();
+    }
 
-        noteslistobjects.clear(); //mandatory for notifyDataSetCahged() to work
+    private void refresh() {
 
-        DatabaseHandler dba = new DatabaseHandler(getApplicationContext());
+        noteslistobjects.clear(); //mandatory for notifyDataSetChanged() to work
 
-        noteslistobjects = dba.getNotesObjectsAsList();
+        DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
+
+        ArrayList<NotepadContent> noteslistobjectsTemp = dbh.getNotesObjectsAsList();
+
+        for(int i =0; i<noteslistobjectsTemp.size();i++)
+        {
+            String text = noteslistobjectsTemp.get(i).getText();
+            String date = noteslistobjectsTemp.get(i).getDate();
+            int id = noteslistobjectsTemp.get(i).getId();
+
+            NotepadContent notepadObject = new NotepadContent();
+
+            notepadObject.setText(text);
+            notepadObject.setDate(date);
+            notepadObject.setId(id);
+
+            noteslistobjects.add(notepadObject);
+        }
 
         CustomListViewAdapter adapter = new CustomListViewAdapter(getApplicationContext(), R.layout.listrow, noteslistobjects);
-
         noteslistview.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 

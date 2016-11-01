@@ -125,6 +125,7 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
                 NotepadContent notepadContent = new NotepadContent();
 
                 notepadContent.setText(c.getString(c.getColumnIndexOrThrow(NotepadContract.NotepadEntry.COLUMN_NAME_CONTENT)));
+
                 notepadContent.setId(c.getInt(c.getColumnIndexOrThrow(NotepadContract.NotepadEntry._ID)));
 
                 DateFormat dateFormat =DateFormat.getDateInstance();
@@ -164,6 +165,18 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
 
         db.close();
 
+    }
+
+    public void deleteText(int _id)
+    {
+
+        SQLiteDatabase dba = this.getWritableDatabase();
+
+        String selection = NotepadContract.NotepadEntry._ID + " LIKE ?";
+
+        String[] selectionArgs = {Integer.toString(_id)};
+
+        dba.delete(NotepadContract.NotepadEntry.TABLE_NAME, selection,selectionArgs);
     }
 
 }
