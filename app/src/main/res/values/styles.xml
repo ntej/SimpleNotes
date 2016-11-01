@@ -16,4 +16,5 @@
         <item name="android:dividerHeight">@dimen/list_divider_height</item>
 
     </style>
+
 </resources>

@@ -28,19 +28,19 @@ public class Main2Activity extends AppCompatActivity {
 
     public void saveTextToDB()
     {
-        DatabaseHandler dba = new DatabaseHandler(getApplicationContext());
+        DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
 
-        String notepadtext =text.getText().toString();
+        String notepadtext= text.getText().toString();
 
         if(notepadtext!=null)
         {
             if(notepadtext=="")
             {
-                dba.storeNoteText("Empty Note");
+                dbh.storeNoteText("Empty Note");
             }
             else
             {
-                dba.storeNoteText(notepadtext);
+                dbh.storeNoteText(notepadtext);
             }
         }
     }
