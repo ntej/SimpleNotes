@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#ffbb00</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="colorNoteText">#4b4b4b</color>
     <color name="colorNoteDate">#747474</color>
-    <color name="colorTheme">#fdffd0</color>
+    <color name="colorBackground">#fdffd0</color>
+    <color name="colorListDivider">#e8eab4</color>
 </resources>

@@ -3,6 +3,7 @@ package www.ntej.com.simplenotes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import data.DatabaseHandler;
 

@@ -9,11 +9,11 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="www.ntej.com.simplenotes.Main3Activity"
-    android:background="@color/colorTheme">
+    android:background="@color/colorBackground">
 
 
     <EditText
-        android:id="@+id/notepad"
+        android:id="@+id/notepad2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textAlignment="textStart"

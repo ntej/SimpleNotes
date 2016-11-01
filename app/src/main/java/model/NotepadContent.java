@@ -1,11 +1,14 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * Created by navatejareddy on 10/29/16.
  */
 
-public class NotepadContent {
+public class NotepadContent implements Serializable {
 
+    private static final long serialVersionUID = 10L;
     public String text;
     public String date;
     public int id;
