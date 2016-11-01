@@ -55,15 +55,6 @@ public class CustomListViewAdapter extends ArrayAdapter<NotepadContent> {
             holder = (ViewHolder) row.getTag();
         }
 
-//            NotepadContent noteslistObjectsTemp = noteslistObjects.get(position);
-//
-////            if (noteslistObjectsTemp != null) {
-////                TextView notetext = (TextView) row.findViewById(R.id.noteTextView);
-////                TextView notedate = (TextView) row.findViewById(R.id.dateTextView);
-////
-////                notetext.setText(noteslistObjectsTemp.getText());
-////                notedate.setText(noteslistObjectsTemp.getDate());
-////            }
 
         holder.notepadObject = getItem(position);
 

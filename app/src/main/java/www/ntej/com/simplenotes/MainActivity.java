@@ -18,6 +18,7 @@ import model.NotepadContent;
 public class MainActivity extends AppCompatActivity {
 
     private ListView noteslistview;
+
     public static Handler h;
 
     ArrayList<NotepadContent> noteslistobjects = new ArrayList<>();
@@ -27,10 +28,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-      //  Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-      //  setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -45,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         noteslistview = (ListView) findViewById(R.id.noteslist);
         refresh();
 
-        //to finish this activity from stack after performing delete in Main3Activity
+        //to finish this activity from stack after performing delete in Main3Activity and discard in Main2Activity
         h = new Handler() {
             public void  handleMessage(Message msg)
             {
@@ -75,22 +72,24 @@ public class MainActivity extends AppCompatActivity {
 
         DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
 
-        ArrayList<NotepadContent> noteslistobjectsTemp = dbh.getNotesObjectsAsList();
+        noteslistobjects = dbh.getNotesObjectsAsList();
 
-        for(int i =0; i<noteslistobjectsTemp.size();i++)
-        {
-            String text = noteslistobjectsTemp.get(i).getText();
-            String date = noteslistobjectsTemp.get(i).getDate();
-            int id = noteslistobjectsTemp.get(i).getId();
+//        ArrayList<NotepadContent> noteslistobjectsTemp = dbh.getNotesObjectsAsList();
 
-            NotepadContent notepadObject = new NotepadContent();
-
-            notepadObject.setText(text);
-            notepadObject.setDate(date);
-            notepadObject.setId(id);
-
-            noteslistobjects.add(notepadObject);
-        }
+//        for(int i =0; i<noteslistobjectsTemp.size();i++)
+//        {
+//            String text = noteslistobjectsTemp.get(i).getText();
+//            String date = noteslistobjectsTemp.get(i).getDate();
+//            int id = noteslistobjectsTemp.get(i).getId();
+//
+//            NotepadContent notepadObject = new NotepadContent();
+//
+//            notepadObject.setText(text);
+//            notepadObject.setDate(date);
+//            notepadObject.setId(id);
+//
+//            noteslistobjects.add(notepadObject);
+//        }
 
         CustomListViewAdapter adapter = new CustomListViewAdapter(getApplicationContext(), R.layout.listrow, noteslistobjects);
         noteslistview.setAdapter(adapter);

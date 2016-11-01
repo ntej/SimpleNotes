@@ -7,9 +7,9 @@
         android:title="Clear Notepad"
         app:showAsAction="ifRoom"/>
 
-    <item android:id="@+id/deletebutton"
-        android:icon="@drawable/delete_selector"
-        android:title="Delete Forever"
+    <item android:id="@+id/discardbutton"
+        android:icon="@drawable/discard_selector"
+        android:title="Discard Note"
         app:showAsAction="ifRoom"/>
 
 </menu>

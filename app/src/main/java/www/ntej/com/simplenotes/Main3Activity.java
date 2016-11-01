@@ -11,6 +11,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import data.DatabaseHandler;
+import model.CommonMethods;
 import model.NotepadContent;
 
 public class Main3Activity extends AppCompatActivity {
@@ -19,7 +20,6 @@ public class Main3Activity extends AppCompatActivity {
     int noteId;
     String noteDate;
     String noteText;
-    String updatedNoteText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +28,8 @@ public class Main3Activity extends AppCompatActivity {
 
         text2 = (EditText)findViewById(R.id.notepad2);
 
-        NotepadContent notepadObject = (NotepadContent) getIntent().getSerializableExtra("userObj");
 
+        NotepadContent notepadObject = (NotepadContent) getIntent().getSerializableExtra("userObj");
         noteText = notepadObject.getText();
         noteId = notepadObject.getId();
         noteDate = notepadObject.getDate();
@@ -45,6 +45,7 @@ public class Main3Activity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         upDateTextToDB();
+
     }
 
     @Override
@@ -60,16 +61,17 @@ public class Main3Activity extends AppCompatActivity {
         switch (item.getItemId())
         {
             case R.id.deletebutton:
-
                 DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
-
                 dbh.deleteText(noteId);
-
+                Toast.makeText(this, "Notes deleted, won't bother you again", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(Main3Activity.this,MainActivity.class));
-
                 finish();
                 MainActivity.h.sendEmptyMessage(0);
+                return true;
 
+            case R.id.clearbutton:
+                text2.setText("");
+                Toast.makeText(this, "Notes cleared", Toast.LENGTH_SHORT).show();
                 return true;
         }
 
@@ -79,17 +81,33 @@ public class Main3Activity extends AppCompatActivity {
 
     public void upDateTextToDB()
     {
-        updatedNoteText = text2.getText().toString();
 
-        if(updatedNoteText==noteText){
-           // Toast.makeText(this, "Nothing to upadate to DB ", Toast.LENGTH_SHORT).show();
+
+        if(textChanged()) {
+            if(!CommonMethods.editTextIsEmpty(text2.getText().toString())) {
+                DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
+                dbh.upDateNoteText(noteId, text2.getText().toString());
+            }
+            else
+            {
+                DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
+                dbh.deleteText(noteId);
+                Toast.makeText(this, "Empty notes! not good, deleted to save you some space for"+ CommonMethods.funPhrases[CommonMethods.ranNumGenerator(CommonMethods.funPhrases.length)], Toast.LENGTH_LONG).show();
+            }
         }
 
+    }
+
+    public boolean textChanged()
+    {
+
+        if(!(noteText.contentEquals(text2.getText())))
+        {
+            return true;
+        }
         else
         {
-            DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
-            dbh.upDateNoteText(noteId,updatedNoteText);
-           // Toast.makeText(this, "Updated to DB", Toast.LENGTH_SHORT).show();
+            return false;
         }
 
     }
