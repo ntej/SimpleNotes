@@ -5,12 +5,17 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.LoginFilter;
+import android.util.Log;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import model.NotepadContent;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by navatejareddy on 10/29/16.
@@ -21,6 +26,7 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
 
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME ="SimpleNotes.db";
+    private long timeInMilliseconds;
 
     private final ArrayList<NotepadContent> noteslist = new ArrayList<>();
 
@@ -128,10 +134,21 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
 
                 notepadContent.setId(c.getInt(c.getColumnIndexOrThrow(NotepadContract.NotepadEntry._ID)));
 
-                DateFormat dateFormat =DateFormat.getDateInstance();
-                String date = dateFormat.format(new Date(c.getLong(c.getColumnIndexOrThrow(NotepadContract.NotepadEntry.DATE))).getTime());
+                timeInMilliseconds = c.getColumnIndexOrThrow(NotepadContract.NotepadEntry.DATE);
 
-                notepadContent.setDate(date);
+
+
+
+                //Time
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(timeInMilliseconds);
+                String time = calendar.get(Calendar.HOUR_OF_DAY)+ ":" + calendar.get(Calendar.MINUTE);
+
+                //Date
+                DateFormat dateFormat =DateFormat.getDateInstance();
+                String date = dateFormat.format(new Date(timeInMilliseconds).getTime());
+
+                notepadContent.setDate(date +","+time);
 
                 noteslist.add(notepadContent);
 
