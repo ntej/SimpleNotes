@@ -22,9 +22,10 @@
         android:layout_height="20dp"
         android:layout_below="@+id/noteTextView"
         android:text="Date goes here"
-        android:textSize="15dp"
+        android:textSize="10dp"
         android:textColor="@color/colorNoteDate"
         android:paddingLeft="10dp"
+        android:textStyle="italic"
         />
 
 </RelativeLayout>

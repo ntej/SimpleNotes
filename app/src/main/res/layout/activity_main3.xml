@@ -12,7 +12,9 @@
     tools:context="www.ntej.com.simplenotes.Main3Activity"
     android:background="@color/colorBackground">
 
-
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <EditText
         android:id="@+id/notepad2"
@@ -20,7 +22,24 @@
         android:layout_height="match_parent"
         android:textAlignment="textStart"
         android:gravity="start"
-        android:padding="10dp"
+        android:paddingTop="13dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:background="#ffffff"/>
+
+    <TextView
+        android:id="@+id/datePan"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:background="@color/colorDatePan"
+        android:textSize="12sp"
+        android:textAlignment="center"
+
+        android:textStyle="italic"
+        />
+
+</FrameLayout>
+
+
 
 </RelativeLayout>

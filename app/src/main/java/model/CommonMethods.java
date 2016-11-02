@@ -1,5 +1,8 @@
 package model;
 
+import android.content.Context;
+import android.content.Intent;
+
 import java.util.Random;
 
 /**
@@ -34,4 +37,5 @@ public class CommonMethods {
         int randomNum = rand.nextInt(seed);
         return randomNum;
     }
+
 }

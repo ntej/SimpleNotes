@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import data.DatabaseHandler;
@@ -17,6 +18,7 @@ import model.NotepadContent;
 public class Main3Activity extends AppCompatActivity {
 
     private EditText text2;
+    private TextView datePan;
     int noteId;
     String noteDate;
     String noteText;
@@ -27,6 +29,8 @@ public class Main3Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main3);
 
         text2 = (EditText)findViewById(R.id.notepad2);
+        datePan = (TextView)findViewById(R.id.datePan);
+
 
 
         NotepadContent notepadObject = (NotepadContent) getIntent().getSerializableExtra("userObj");
@@ -36,10 +40,12 @@ public class Main3Activity extends AppCompatActivity {
 
 
         text2.setText(noteText);
+        datePan.setText("Last Edited on "+noteDate);
 
 
 
     }
+
 
     @Override
     protected void onPause() {
@@ -72,6 +78,22 @@ public class Main3Activity extends AppCompatActivity {
             case R.id.clearbutton:
                 text2.setText("");
                 Toast.makeText(this, "Notes cleared", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.sharebutton3:
+                if(!CommonMethods.editTextIsEmpty(text2.getText().toString())) {
+
+                    //
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT,text2.getText().toString());
+                    sendIntent.setType("text/plain");
+                    startActivity(sendIntent);
+                }
+                else
+                {
+                    Toast.makeText(this, "Are you sure! you want to share nothing?", Toast.LENGTH_SHORT).show();
+                }
                 return true;
         }
 

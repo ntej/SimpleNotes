@@ -15,15 +15,17 @@ public class Main2Activity extends AppCompatActivity {
 
     private EditText text;
     boolean discard;
+    String sharedText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
         text = (EditText)findViewById(R.id.notepad);
+
+
     }
-
-
+    
     @Override
     protected void onPause() {
         super.onPause();
@@ -54,6 +56,23 @@ public class Main2Activity extends AppCompatActivity {
                 finish();
                 MainActivity.h.sendEmptyMessage(0);
                 return true;
+            
+            case R.id.sharebutton2:
+                if(!CommonMethods.editTextIsEmpty(text.getText().toString())) {
+
+                    //
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT,text.getText().toString());
+                    sendIntent.setType("text/plain");
+                    startActivity(sendIntent);
+                }
+                else
+                {
+                    Toast.makeText(this, "Are you sure! you want to share nothing?", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+                
         }
 
         return super.onOptionsItemSelected(item);
@@ -72,7 +91,7 @@ public class Main2Activity extends AppCompatActivity {
             }
             else
             {
-                Toast.makeText(this, "Empty notes discarded to save you some space for"+ CommonMethods.funPhrases[CommonMethods.ranNumGenerator(CommonMethods.funPhrases.length)], Toast.LENGTH_LONG).show();
+               // Toast.makeText(this, "Empty notes discarded to save you some space for"+ CommonMethods.funPhrases[CommonMethods.ranNumGenerator(CommonMethods.funPhrases.length)], Toast.LENGTH_LONG).show();
             }
         }
     }
