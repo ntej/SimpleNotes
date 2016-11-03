@@ -13,7 +13,7 @@
         android:text="Portion of Note text"
         android:textSize="20sp"
         android:textColor="@color/colorNoteText"
-        android:paddingLeft="10dp"
+        android:paddingLeft="22dp"
         />
 
     <TextView
@@ -24,8 +24,7 @@
         android:text="Date goes here"
         android:textSize="10dp"
         android:textColor="@color/colorNoteDate"
-        android:paddingLeft="10dp"
-        android:textStyle="italic"
+        android:paddingLeft="22dp"
         />
 
 </RelativeLayout>

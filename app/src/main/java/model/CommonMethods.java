@@ -1,8 +1,5 @@
 package model;
 
-import android.content.Context;
-import android.content.Intent;
-
 import java.util.Random;
 
 /**

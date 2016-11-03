@@ -10,7 +10,7 @@ public class NotepadContent implements Serializable {
 
     private static final long serialVersionUID = 10L;
     public String text;
-    public String date;
+    public String dateAndTime;
     public int id;
 
     public int getId() {
@@ -31,12 +31,12 @@ public class NotepadContent implements Serializable {
         this.text = text;
     }
 
-    public String getDate() {
-        return date;
+    public String getDateAndTime() {
+        return dateAndTime;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDateAndTime(String dateAndTime) {
+        this.dateAndTime = dateAndTime;
     }
 
 }

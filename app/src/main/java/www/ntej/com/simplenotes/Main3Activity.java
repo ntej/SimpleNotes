@@ -1,13 +1,11 @@
 package www.ntej.com.simplenotes;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +34,7 @@ public class Main3Activity extends AppCompatActivity {
         NotepadContent notepadObject = (NotepadContent) getIntent().getSerializableExtra("userObj");
         noteText = notepadObject.getText();
         noteId = notepadObject.getId();
-        noteDate = notepadObject.getDate();
+        noteDate = notepadObject.getDateAndTime();
 
 
         text2.setText(noteText);
@@ -69,7 +67,7 @@ public class Main3Activity extends AppCompatActivity {
             case R.id.deletebutton:
                 DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
                 dbh.deleteText(noteId);
-                Toast.makeText(this, "Notes deleted, won't bother you again", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Notes deleted", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(Main3Activity.this,MainActivity.class));
                 finish();
                 MainActivity.h.sendEmptyMessage(0);
@@ -114,7 +112,7 @@ public class Main3Activity extends AppCompatActivity {
             {
                 DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
                 dbh.deleteText(noteId);
-                Toast.makeText(this, "Empty notes! not good, deleted to save you some space for"+ CommonMethods.funPhrases[CommonMethods.ranNumGenerator(CommonMethods.funPhrases.length)], Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Empty notes! not good, deleted to save you some space for"+ CommonMethods.funPhrases[CommonMethods.ranNumGenerator(CommonMethods.funPhrases.length)], Toast.LENGTH_SHORT).show();
             }
         }
 

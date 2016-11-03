@@ -3,8 +3,6 @@ package model;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +57,7 @@ public class CustomListViewAdapter extends ArrayAdapter<NotepadContent> {
         holder.notepadObject = getItem(position);
 
         holder.noteText.setText(holder.notepadObject.getText());
-        holder.noteDate.setText(holder.notepadObject.getDate());
+        holder.noteDate.setText(holder.notepadObject.getDateAndTime());
 
        final ViewHolder finalHolder = holder;
 

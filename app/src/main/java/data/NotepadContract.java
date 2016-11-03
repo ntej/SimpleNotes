@@ -18,7 +18,7 @@ public final class NotepadContract {
         //Values of the table
         public static final String TABLE_NAME = "entry";
         public static final String COLUMN_NAME_CONTENT = "notepadcontent";
-        public static final String DATE = "date";
+        public static final String DATE = "dateAndTime";
 
         //tabel creation
         private static final String TEXT_TYPE = " TEXT";

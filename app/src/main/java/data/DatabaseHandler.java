@@ -6,11 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 
 import model.NotepadContent;
+
 
 /**
  * Created by navatejareddy on 10/29/16.
@@ -21,6 +21,8 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
 
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME ="SimpleNotes.db";
+    private long timeInMilliseconds;
+    String TAG = " dbh";
 
     private final ArrayList<NotepadContent> noteslist = new ArrayList<>();
 
@@ -61,39 +63,7 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
 
     }
 
-//    public String getNoteText(String id)
-//    {
-//
-//        SQLiteDatabase db = this.getReadableDatabase();
-//
-//        String[] projection = {
-//                NotepadContract.NotepadEntry._ID,
-//                NotepadContract.NotepadEntry.COLUMN_NAME_CONTENT,
-//                NotepadContract.NotepadEntry.DATE
-//        };
-//
-//        String selection = NotepadContract.NotepadEntry._ID + " = ? ";
-//        String[] selectionArgs = {id};
-//
-//        String sortOrder = NotepadContract.NotepadEntry.DATE + " DESC";
-//
-//        Cursor c = db.query(
-//                NotepadContract.NotepadEntry.TABLE_NAME,
-//                projection,
-//                selection,
-//                selectionArgs,
-//                null,
-//                null,
-//                sortOrder
-//        );
-//
-//        c.moveToFirst();
-//
-//        String textAtId = c.getString(c.getColumnIndexOrThrow(NotepadContract.NotepadEntry.COLUMN_NAME_CONTENT));
-//
-//        return textAtId;
-//
-//    }
+
 
 
     public ArrayList<NotepadContent> getNotesObjectsAsList()
@@ -128,10 +98,9 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
 
                 notepadContent.setId(c.getInt(c.getColumnIndexOrThrow(NotepadContract.NotepadEntry._ID)));
 
-                DateFormat dateFormat =DateFormat.getDateInstance();
-                String date = dateFormat.format(new Date(c.getLong(c.getColumnIndexOrThrow(NotepadContract.NotepadEntry.DATE))).getTime());
+                timeInMilliseconds = c.getLong(c.getColumnIndexOrThrow(NotepadContract.NotepadEntry.DATE));
 
-                notepadContent.setDate(date);
+                notepadContent.setDateAndTime(dateAndTimeGenerator(timeInMilliseconds));
 
                 noteslist.add(notepadContent);
 
@@ -177,6 +146,106 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
         String[] selectionArgs = {Integer.toString(_id)};
 
         dba.delete(NotepadContract.NotepadEntry.TABLE_NAME, selection,selectionArgs);
+    }
+
+
+    private String dateAndTimeGenerator(long millis)
+    {
+
+        /*Date and Month variables*/
+        int dateofTheMonthSaved;
+        int monthNumberSaved;
+        String monthName="";
+
+        /*Time Variables*/
+        String timeofTheDaysaved;
+        String hour;
+        String minutes;
+        int AM_orPM_number;
+        String AM_orPM;
+
+
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(millis);
+
+        /*Getting Month and Date*/
+        dateofTheMonthSaved = calendar.get(Calendar.DATE);
+        monthNumberSaved = calendar.get(Calendar.MONTH);
+        switch (monthNumberSaved) {
+            case 0:
+                monthName = "Jan";
+                break;
+
+            case 1:
+                monthName = "Feb";
+                break;
+
+            case 2:
+                monthName = "Mar";
+                break;
+
+            case 3:
+                monthName = "Apr";
+                break;
+
+            case 4:
+                monthName = "May";
+                break;
+
+            case 5:
+                monthName = "Jun";
+                break;
+
+            case 6:
+                monthName = "Jul";
+                break;
+
+            case 7:
+                monthName = "Aug";
+                break;
+
+            case 8:
+                monthName = "Sep";
+                break;
+
+            case 9:
+                monthName = "Oct";
+                break;
+
+            case 10:
+                monthName = "Nov";
+                break;
+
+            case 11:
+                monthName = "Dec";
+                break;
+        }
+
+
+        /*Getting Time*/
+        hour = Integer.toString(calendar.get(Calendar.HOUR));
+        minutes =Integer.toString(calendar.get(Calendar.MINUTE));
+        if(minutes.trim().length()==1) //adding zero infront of single digit minutes
+        {
+            minutes = 0+minutes;
+        }
+
+
+        timeofTheDaysaved = hour + ":" + minutes;
+
+        AM_orPM_number = calendar.get(Calendar.AM_PM);
+        if(AM_orPM_number == 0)
+        {
+            AM_orPM = "AM";
+        }
+        else
+        {
+            AM_orPM = "PM";
+        }
+
+
+        return dateofTheMonthSaved+" "+monthName + " at " + timeofTheDaysaved+AM_orPM;
     }
 
 }

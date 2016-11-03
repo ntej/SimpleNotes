@@ -2,12 +2,13 @@ package www.ntej.com.simplenotes;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ListView;
-import android.os.Handler;
-import android.os.Message;
 
 import java.util.ArrayList;
 
@@ -18,10 +19,14 @@ import model.NotepadContent;
 public class MainActivity extends AppCompatActivity {
 
     private ListView noteslistview;
+    private ImageButton noNotesImageButton;
+    private FloatingActionButton fab;
 
     public static Handler h;
 
     ArrayList<NotepadContent> noteslistobjects = new ArrayList<>();
+
+    String TAG = "My Activity";
 
 
     @Override
@@ -29,7 +34,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        noteslistview = (ListView) findViewById(R.id.noteslist);
+        noNotesImageButton = (ImageButton) findViewById(R.id.addNotes);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,10 +48,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        noteslistview = (ListView) findViewById(R.id.noteslist);
-        refresh();
+        noNotesImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, Main2Activity.class));
+            }
+        });
 
-        //to finish this activity from stack after performing delete in Main3Activity and discard in Main2Activity
+
+
+
+
+        //to finish this activity from stack after performing 'delete action' in Main3Activity and 'discard action' in Main2Activity
         h = new Handler() {
             public void  handleMessage(Message msg)
             {
@@ -74,26 +91,22 @@ public class MainActivity extends AppCompatActivity {
 
         noteslistobjects = dbh.getNotesObjectsAsList();
 
-//        ArrayList<NotepadContent> noteslistobjectsTemp = dbh.getNotesObjectsAsList();
-
-//        for(int i =0; i<noteslistobjectsTemp.size();i++)
-//        {
-//            String text = noteslistobjectsTemp.get(i).getText();
-//            String date = noteslistobjectsTemp.get(i).getDate();
-//            int id = noteslistobjectsTemp.get(i).getId();
-//
-//            NotepadContent notepadObject = new NotepadContent();
-//
-//            notepadObject.setText(text);
-//            notepadObject.setDate(date);
-//            notepadObject.setId(id);
-//
-//            noteslistobjects.add(notepadObject);
-//        }
-
         CustomListViewAdapter adapter = new CustomListViewAdapter(getApplicationContext(), R.layout.listrow, noteslistobjects);
         noteslistview.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        if(noteslistview.getCount() ==0)
+        {
+            noNotesImageButton.setBackgroundResource(R.drawable.add_note_selector);
+            fab.setVisibility(View.INVISIBLE);
+
+        }
+        else
+        {
+            noNotesImageButton.setVisibility(View.INVISIBLE);
+            fab.setVisibility(View.VISIBLE);
+        }
+
 
     }
 
