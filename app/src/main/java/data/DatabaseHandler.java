@@ -248,7 +248,7 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
         return dateofTheMonthSaved+" "+monthName + " at " + timeofTheDaysaved+AM_orPM;
     }
 
-}
+}//
 
 
 
