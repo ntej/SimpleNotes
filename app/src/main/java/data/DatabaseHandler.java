@@ -7,9 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import model.NotepadContent;
+import ntej.time.UTCTimeGenerator;
 
 
 /**
@@ -100,7 +100,10 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
 
                 timeInMilliseconds = c.getLong(c.getColumnIndexOrThrow(NotepadContract.NotepadEntry.DATE));
 
-                notepadContent.setDateAndTime(dateAndTimeGenerator(timeInMilliseconds));
+                //Library by ntej. Check intellij IDE project for more details
+                UTCTimeGenerator utcTimeGenerator = new UTCTimeGenerator(timeInMilliseconds);
+
+                notepadContent.setDateAndTime(utcTimeGenerator.getMonthandDate()+" at " +utcTimeGenerator.getTime());
 
                 noteslist.add(notepadContent);
 
@@ -148,134 +151,4 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
         dba.delete(NotepadContract.NotepadEntry.TABLE_NAME, selection,selectionArgs);
     }
 
-
-    private String dateAndTimeGenerator(long millis)
-    {
-
-        /*Date and Month variables*/
-        int dateofTheMonthSaved;
-        int monthNumberSaved;
-        String monthName="";
-
-        /*Time Variables*/
-        String timeofTheDaysaved;
-        String hour;
-        String minutes;
-        int AM_orPM_number;
-        String AM_orPM;
-
-
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(millis);
-
-        /*Getting Month and Date*/
-        dateofTheMonthSaved = calendar.get(Calendar.DATE);
-        monthNumberSaved = calendar.get(Calendar.MONTH);
-        switch (monthNumberSaved) {
-            case 0:
-                monthName = "Jan";
-                break;
-
-            case 1:
-                monthName = "Feb";
-                break;
-
-            case 2:
-                monthName = "Mar";
-                break;
-
-            case 3:
-                monthName = "Apr";
-                break;
-
-            case 4:
-                monthName = "May";
-                break;
-
-            case 5:
-                monthName = "Jun";
-                break;
-
-            case 6:
-                monthName = "Jul";
-                break;
-
-            case 7:
-                monthName = "Aug";
-                break;
-
-            case 8:
-                monthName = "Sep";
-                break;
-
-            case 9:
-                monthName = "Oct";
-                break;
-
-            case 10:
-                monthName = "Nov";
-                break;
-
-            case 11:
-                monthName = "Dec";
-                break;
-        }
-
-
-        /*Getting Time*/
-        hour = Integer.toString(calendar.get(Calendar.HOUR));
-        minutes =Integer.toString(calendar.get(Calendar.MINUTE));
-        if(minutes.trim().length()==1) //adding zero infront of single digit minutes
-        {
-            minutes = 0+minutes;
-        }
-
-
-        timeofTheDaysaved = hour + ":" + minutes;
-
-        AM_orPM_number = calendar.get(Calendar.AM_PM);
-        if(AM_orPM_number == 0)
-        {
-            AM_orPM = "AM";
-        }
-        else
-        {
-            AM_orPM = "PM";
-        }
-
-
-        return dateofTheMonthSaved+" "+monthName + " at " + timeofTheDaysaved+AM_orPM;
-    }
-
-}//
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}

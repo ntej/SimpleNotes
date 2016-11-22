@@ -61,9 +61,12 @@ public class CustomListViewAdapter extends ArrayAdapter<NotepadContent> {
 
        final ViewHolder finalHolder = holder;
 
-        row.setOnClickListener(new View.OnClickListener() {
+        row.setOnClickListener(
+                new View.OnClickListener()  //Ananomous inner class
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
 
                 Intent i = new Intent(context, Main3Activity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
