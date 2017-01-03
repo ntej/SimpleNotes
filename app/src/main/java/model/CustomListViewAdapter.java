@@ -58,7 +58,7 @@ public class CustomListViewAdapter extends ArrayAdapter<NotepadContent> {
         holder.notepadObject = getItem(position);
 
 
-        holder.noteText.setText(holder.notepadObject.getText());
+        holder.noteText.setText(holder.notepadObject.getText()+"...");
         holder.noteDate.setText(holder.notepadObject.getDateAndTime());
 
        final ViewHolder finalHolder = holder;
