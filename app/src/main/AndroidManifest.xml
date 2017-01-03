@@ -22,11 +22,13 @@
 
         <activity
             android:name=".Main2Activity"
+            android:windowSoftInputMode="adjustResize"
             android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
 
         <activity
             android:name=".Main3Activity"
+            android:windowSoftInputMode="adjustResize"
             android:configChanges="orientation|keyboardHidden|screenSize"
             ></activity>
 

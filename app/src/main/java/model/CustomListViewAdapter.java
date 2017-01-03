@@ -2,7 +2,6 @@ package model;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +57,7 @@ public class CustomListViewAdapter extends ArrayAdapter<NotepadContent> {
         holder.notepadObject = getItem(position);
 
 
-        holder.noteText.setText(holder.notepadObject.getText()+"...");
+        holder.noteText.setText(holder.notepadObject.getText().substring(0,24)+"...");
         holder.noteDate.setText(holder.notepadObject.getDateAndTime());
 
        final ViewHolder finalHolder = holder;
@@ -80,6 +79,15 @@ public class CustomListViewAdapter extends ArrayAdapter<NotepadContent> {
 
             }
         });
+
+        row.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                return false;
+            }
+        });
+
         return row;
 
     }

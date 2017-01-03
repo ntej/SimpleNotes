@@ -2,20 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/clearbutton"
-        android:icon="@drawable/clear_selector"
-        android:title="Clear Notes"
-        app:showAsAction="ifRoom"/>
-
     <item android:id="@+id/sharebutton3"
-        android:icon="@drawable/share_selector"
+        android:icon="@drawable/ic_action_share_white"
         android:title="Share Notes"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/clearbutton"
+        android:title="Clear Notes"
+        app:showAsAction="never"/>
 
     <item android:id="@+id/deletebutton"
-        android:icon="@drawable/delete_selector"
         android:title="Delete Forever"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="never"/>
 
 
 </menu>

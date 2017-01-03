@@ -7,9 +7,7 @@ import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -21,7 +19,7 @@ import model.NotepadContent;
 public class MainActivity extends AppCompatActivity {
 
     private ListView noteslistview;
-   // private ImageButton noNotesImageButton;
+
     private FloatingActionButton fab;
 
     DatabaseHandler dbh;
@@ -30,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<NotepadContent> noteslistobjects = new ArrayList<>();
 
-    String TAG = "My Activity";
+
 
 
     Toolbar toolbar;
@@ -46,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         dbh = new DatabaseHandler(getApplicationContext());
 
         noteslistview = (ListView) findViewById(R.id.noteslist);
-       // noNotesImageButton = (ImageButton) findViewById(R.id.addNotes);
+
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
 
@@ -58,14 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-//        noNotesImageButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(MainActivity.this, Main2Activity.class));
-//            }
-//        });
-
 
 
 
@@ -96,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void refresh() {
 
-        Log.i("TAG","refresh() called");
         noteslistobjects.clear(); //mandatory for notifyDataSetChanged() to work
 
 
@@ -106,20 +95,6 @@ public class MainActivity extends AppCompatActivity {
         CustomListViewAdapter adapter = new CustomListViewAdapter(getApplicationContext(), R.layout.listrow, noteslistobjects);
         noteslistview.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-
-//        if(noteslistview.getCount() ==0)
-//        {
-//            Log.i("TAG","refresh() called and in if");
-//            noNotesImageButton.setBackgroundResource(R.drawable.add_note_selector);
-//            fab.setVisibility(View.INVISIBLE);
-//
-//        }
-//        else
-//        {
-//            noNotesImageButton.setVisibility(View.INVISIBLE);
-//            fab.setVisibility(View.VISIBLE);
-//        }
-
 
     }
 

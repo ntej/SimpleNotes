@@ -1,9 +1,6 @@
 package www.ntej.com.simplenotes;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -24,7 +21,6 @@ public class Main3Activity extends AppCompatActivity {
     int noteId;
     String noteDate;
     String noteText;
-    String noteTextTemp;
     boolean notesDeletedFromToolBar = false;
     DatabaseHandler dbh;
 
@@ -73,11 +69,6 @@ public class Main3Activity extends AppCompatActivity {
 
     }
 
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        upDateTextToDB();
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -139,14 +130,12 @@ public class Main3Activity extends AppCompatActivity {
 
         if(textChanged()) {
             if(!CommonMethods.editTextIsEmpty(text2.getText().toString())) {
-        //DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
 
                 dbh.upDateNoteText(noteId, text2.getText().toString());
 
             }
             else
             {
-                //DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
                 dbh.deleteText(noteId);
                 Toast.makeText(this, "Empty notes! not good, deleted to save you some space for"+ CommonMethods.funPhrases[CommonMethods.ranNumGenerator(CommonMethods.funPhrases.length)], Toast.LENGTH_SHORT).show();
             }

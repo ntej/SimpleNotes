@@ -14,18 +14,27 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:fitsSystemWindows="true"
         />
-    <EditText
-        android:id="@+id/notepad"
+    <ScrollView
         android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true">
+    <EditText
+        android:id="@+id/notepad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:textAlignment="textStart"
         android:gravity="start"
-        android:padding="10dp"
-        android:background="#ffffff"/>
+        android:paddingTop="16dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="1dp"
+        android:background="#ffffff"
+        />
+    </ScrollView>
 
 </RelativeLayout>

@@ -15,8 +15,9 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:titleTextColor="@android:color/white"
         android:fitsSystemWindows="true"
         />
 
@@ -42,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/add_selector"
+        app:srcCompat="@drawable/ic_action_newnote_white"
         />
 
     </android.support.design.widget.CoordinatorLayout>

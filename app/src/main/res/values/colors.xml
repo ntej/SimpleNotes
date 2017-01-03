@@ -8,5 +8,5 @@
     <color name="colorNoteDate">#747474</color>
     <color name="colorBackground">#fdffd0</color>
     <color name="colorListDivider">#e8eab4</color>
-    <color name="colorDatePan">#f4f4f4</color>
+    <color name="colorDatePan">#ededed</color>
 </resources>
