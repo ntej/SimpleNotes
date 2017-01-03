@@ -13,24 +13,25 @@
     tools:context="www.ntej.com.simplenotes.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
 
         <ListView
             android:id="@+id/noteslist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none"
+            android:choiceMode="multipleChoiceModal"
             ></ListView>
 
-        <ImageButton
-            android:id="@+id/addNotes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+        <!--<ImageButton-->
+            <!--android:id="@+id/addNotes"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center" />-->
 
-    </FrameLayout>
+    <!--</FrameLayout>-->
 
 
 </RelativeLayout>

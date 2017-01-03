@@ -1,6 +1,9 @@
 package www.ntej.com.simplenotes;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -20,11 +23,17 @@ public class Main3Activity extends AppCompatActivity {
     int noteId;
     String noteDate;
     String noteText;
+    String noteTextTemp;
+    boolean notesDeletedFromToolBar = false;
+    DatabaseHandler dbh;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
+
+        dbh = new DatabaseHandler(this);
 
         text2 = (EditText)findViewById(R.id.notepad2);
         datePan = (TextView)findViewById(R.id.datePan);
@@ -32,15 +41,18 @@ public class Main3Activity extends AppCompatActivity {
 
 
         NotepadContent notepadObject = (NotepadContent) getIntent().getSerializableExtra("userObj");
-        noteText = notepadObject.getText();
+
+
+
+            noteText = notepadObject.getText();
+            text2.setText(noteText);
+
         noteId = notepadObject.getId();
         noteDate = notepadObject.getDateAndTime();
 
 
-        text2.setText(noteText);
+
         datePan.setText("Last Edited on "+noteDate);
-
-
 
     }
 
@@ -48,9 +60,18 @@ public class Main3Activity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        upDateTextToDB();
+
+        if(!notesDeletedFromToolBar)
+            upDateTextToDB();
+
 
     }
+
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        upDateTextToDB();
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -65,7 +86,8 @@ public class Main3Activity extends AppCompatActivity {
         switch (item.getItemId())
         {
             case R.id.deletebutton:
-                DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
+                notesDeletedFromToolBar = true;
+               // DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
                 dbh.deleteText(noteId);
                 Toast.makeText(this, "Notes deleted", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(Main3Activity.this,MainActivity.class));
@@ -74,8 +96,14 @@ public class Main3Activity extends AppCompatActivity {
                 return true;
 
             case R.id.clearbutton:
-                text2.setText("");
-                Toast.makeText(this, "Notes cleared", Toast.LENGTH_SHORT).show();
+                if(text2.getText().toString().trim().length()!=0) {
+                    text2.setText("");
+                    Toast.makeText(this, "Notes cleared", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(this, "Nothing to clear", Toast.LENGTH_SHORT).show();
+                }
                 return true;
 
             case R.id.sharebutton3:
@@ -105,12 +133,14 @@ public class Main3Activity extends AppCompatActivity {
 
         if(textChanged()) {
             if(!CommonMethods.editTextIsEmpty(text2.getText().toString())) {
-                DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
+        //DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
+
                 dbh.upDateNoteText(noteId, text2.getText().toString());
+
             }
             else
             {
-                DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
+                //DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
                 dbh.deleteText(noteId);
                 Toast.makeText(this, "Empty notes! not good, deleted to save you some space for"+ CommonMethods.funPhrases[CommonMethods.ranNumGenerator(CommonMethods.funPhrases.length)], Toast.LENGTH_SHORT).show();
             }
@@ -130,6 +160,8 @@ public class Main3Activity extends AppCompatActivity {
             return false;
         }
 
-    }
+   }
+
+
 }
 

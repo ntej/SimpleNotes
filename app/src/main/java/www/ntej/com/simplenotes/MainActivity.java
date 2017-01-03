@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -19,8 +20,10 @@ import model.NotepadContent;
 public class MainActivity extends AppCompatActivity {
 
     private ListView noteslistview;
-    private ImageButton noNotesImageButton;
+   // private ImageButton noNotesImageButton;
     private FloatingActionButton fab;
+
+    DatabaseHandler dbh;
 
     public static Handler h;
 
@@ -34,8 +37,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        dbh = new DatabaseHandler(getApplicationContext());
+
         noteslistview = (ListView) findViewById(R.id.noteslist);
-        noNotesImageButton = (ImageButton) findViewById(R.id.addNotes);
+       // noNotesImageButton = (ImageButton) findViewById(R.id.addNotes);
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
 
@@ -48,12 +53,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        noNotesImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Main2Activity.class));
-            }
-        });
+//        noNotesImageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(MainActivity.this, Main2Activity.class));
+//            }
+//        });
 
 
 
@@ -85,9 +90,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void refresh() {
 
+        Log.i("TAG","refresh() called");
         noteslistobjects.clear(); //mandatory for notifyDataSetChanged() to work
 
-        DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
+
 
         noteslistobjects = dbh.getNotesObjectsAsList();
 
@@ -95,17 +101,18 @@ public class MainActivity extends AppCompatActivity {
         noteslistview.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
-        if(noteslistview.getCount() ==0)
-        {
-            noNotesImageButton.setBackgroundResource(R.drawable.add_note_selector);
-            fab.setVisibility(View.INVISIBLE);
-
-        }
-        else
-        {
-            noNotesImageButton.setVisibility(View.INVISIBLE);
-            fab.setVisibility(View.VISIBLE);
-        }
+//        if(noteslistview.getCount() ==0)
+//        {
+//            Log.i("TAG","refresh() called and in if");
+//            noNotesImageButton.setBackgroundResource(R.drawable.add_note_selector);
+//            fab.setVisibility(View.INVISIBLE);
+//
+//        }
+//        else
+//        {
+//            noNotesImageButton.setVisibility(View.INVISIBLE);
+//            fab.setVisibility(View.VISIBLE);
+//        }
 
 
     }
