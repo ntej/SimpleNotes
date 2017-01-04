@@ -7,6 +7,7 @@ import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -18,32 +19,29 @@ import model.NotepadContent;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ListView noteslistview;
-
-    private FloatingActionButton fab;
-
-    DatabaseHandler dbh;
-
     public static Handler h;
-
-    ArrayList<NotepadContent> noteslistobjects = new ArrayList<>();
-
-
-
-
-    Toolbar toolbar;
+    private DatabaseHandler dbh;
+    private CustomListViewAdapter adapter;
+    private ArrayList<NotepadContent> noteslistobjects = new ArrayList<>();
+    private Toolbar toolbar;
+    private ListView noteslistview;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        dbh = new DatabaseHandler(getApplicationContext());
+        dbh = new DatabaseHandler(this);
 
+        noteslistobjects = dbh.getNotesObjectsAsList();
+
+        adapter = new CustomListViewAdapter(this, R.layout.listrow, noteslistobjects);
         noteslistview = (ListView) findViewById(R.id.noteslist);
+        noteslistview.setAdapter(adapter);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -58,18 +56,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-
-        //to finish this activity from stack after performing 'delete action' in Main3Activity and 'discard action' in Main2Activity
+        //to finish this activity from stack after performing 'delete action'
+        // in Main3Activity, 'discard action' in Main2Activity and
+        // updating list view when delete action(dialog box) performed from list view longclick listener.
         h = new Handler() {
-            public void  handleMessage(Message msg)
-            {
+            public void handleMessage(Message msg) {
                 super.handleMessage(msg);
 
-                switch(msg.what) {
+                switch (msg.what) {
 
                     case 0:
                         finish();
+                        break;
+                    case 1:
+                        refresh();
                         break;
 
                 }
@@ -78,22 +78,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         refresh();
     }
+
 
     private void refresh() {
 
         noteslistobjects.clear(); //mandatory for notifyDataSetChanged() to work
 
-
-
         noteslistobjects = dbh.getNotesObjectsAsList();
 
-        CustomListViewAdapter adapter = new CustomListViewAdapter(getApplicationContext(), R.layout.listrow, noteslistobjects);
-        noteslistview.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
     }

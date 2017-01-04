@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:elevation="4dp"
+        android:elevation="@dimen/tool_bar_elevation"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:fitsSystemWindows="true"
@@ -29,11 +29,11 @@
         android:layout_height="wrap_content"
         android:textAlignment="textStart"
         android:gravity="start"
-        android:paddingTop="16dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="1dp"
-        android:background="#ffffff"
+        android:paddingTop="@dimen/activity2_note_pad_top_padding"
+        android:paddingLeft="@dimen/note_pad_left_padding"
+        android:paddingRight="@dimen/note_pad_right_padding"
+        android:paddingBottom="@dimen/note_pad_bottom_padding"
+        android:background="@color/colorNotePadEditText"
         />
     </ScrollView>
 

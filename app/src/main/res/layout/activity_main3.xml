@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:elevation="4dp"
+        android:elevation="@dimen/tool_bar_elevation"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
@@ -35,12 +35,12 @@
                     android:id="@+id/notepad2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#ffffff"
+                    android:background="@color/colorNotePadEditText"
                     android:gravity="start"
-                    android:paddingBottom="1dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="13dp"
+                    android:paddingTop="@dimen/activity3_note_pad_top_padding"
+                    android:paddingLeft="@dimen/note_pad_left_padding"
+                    android:paddingRight="@dimen/note_pad_right_padding"
+                    android:paddingBottom="@dimen/note_pad_bottom_padding"
                     android:textAlignment="textStart" />
             </ScrollView>
         </RelativeLayout>
@@ -48,10 +48,10 @@
         <TextView
             android:id="@+id/datePan"
             android:layout_width="match_parent"
-            android:layout_height="16dp"
+            android:layout_height="@dimen/date_pan_height"
             android:background="@color/colorDatePan"
             android:textAlignment="center"
-            android:textSize="12sp"
+            android:textSize="@dimen/date_pan_text_size"
             android:textStyle="italic" />
 
     </FrameLayout>

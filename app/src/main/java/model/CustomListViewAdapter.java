@@ -1,8 +1,10 @@
 package model;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +13,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import data.DatabaseHandler;
 import www.ntej.com.simplenotes.Main3Activity;
+import www.ntej.com.simplenotes.MainActivity;
 import www.ntej.com.simplenotes.R;
 
 /**
@@ -23,11 +27,19 @@ public class CustomListViewAdapter extends ArrayAdapter<NotepadContent> {
     private Context context;
     private int layoutResource;
 
+    private AlertDialog.Builder alertBuilder;
+    private AlertDialog alertDialog;
+
+    private DatabaseHandler dbh;
+
     public CustomListViewAdapter(Context context, int resource, ArrayList<NotepadContent> objects) {
         super(context, resource, objects);
 
         this.context = context;
         this.layoutResource = resource;
+
+        alertBuilder = new AlertDialog.Builder(context);
+        dbh = new DatabaseHandler(context);
 
     }
 
@@ -35,9 +47,9 @@ public class CustomListViewAdapter extends ArrayAdapter<NotepadContent> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         View row = convertView;
-        ViewHolder holder = null;
+        ViewHolder holder;
 
-        if (row == null || row.getTag()==null) {
+        if (row == null || row.getTag() == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(layoutResource, null);
 
@@ -47,9 +59,7 @@ public class CustomListViewAdapter extends ArrayAdapter<NotepadContent> {
             holder.noteDate = (TextView) row.findViewById(R.id.dateTextView);
 
             row.setTag(holder);
-        }
-        else
-        {
+        } else {
             holder = (ViewHolder) row.getTag();
         }
 
@@ -57,34 +67,54 @@ public class CustomListViewAdapter extends ArrayAdapter<NotepadContent> {
         holder.notepadObject = getItem(position);
 
 
-        holder.noteText.setText(holder.notepadObject.getText().substring(0,24)+"...");
+        holder.noteText.setText(holder.notepadObject.getText() + "...");
         holder.noteDate.setText(holder.notepadObject.getDateAndTime());
 
-       final ViewHolder finalHolder = holder;
+        final ViewHolder finalHolder = holder;
 
         row.setOnClickListener(
                 new View.OnClickListener()  //Ananomous inner class
-        {
-            @Override
-            public void onClick(View v)
-            {
+                {
+                    @Override
+                    public void onClick(View v) {
 
-                Intent i = new Intent(context, Main3Activity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                Bundle mBundle = new Bundle();
-                mBundle.putSerializable("userObj",finalHolder.notepadObject);
+                        Intent i = new Intent(context, Main3Activity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        Bundle mBundle = new Bundle();
+                        mBundle.putSerializable("userObj", finalHolder.notepadObject);
 
-                i.putExtras(mBundle);
-                context.startActivity(i);
+                        i.putExtras(mBundle);
+                        context.startActivity(i);
 
-            }
-        });
+                    }
+                });
 
         row.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
 
-                return false;
+                alertBuilder.setTitle("QuickView");
+                alertBuilder.setMessage(finalHolder.notepadObject.getText());
+
+                alertBuilder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dbh.deleteText(finalHolder.notepadObject.getId());
+                        MainActivity.h.sendEmptyMessage(1);
+                    }
+                });
+
+                alertBuilder.setNeutralButton("Dismiss", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                alertDialog = alertBuilder.create();
+                alertDialog.show();
+
+                return true;
             }
         });
 
@@ -93,7 +123,7 @@ public class CustomListViewAdapter extends ArrayAdapter<NotepadContent> {
     }
 
 
-    public class ViewHolder{
+    public class ViewHolder {
         NotepadContent notepadObject;
         TextView noteText;
         TextView noteDate;

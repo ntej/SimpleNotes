@@ -9,4 +9,6 @@
     <color name="colorBackground">#fdffd0</color>
     <color name="colorListDivider">#e8eab4</color>
     <color name="colorDatePan">#ededed</color>
+
+    <color name="colorNotePadEditText">#ffffff</color>
 </resources>

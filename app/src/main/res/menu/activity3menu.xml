@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/sharebutton3"
+    <item android:id="@+id/sharebutton"
         android:icon="@drawable/ic_action_share_white"
-        android:title="Share Notes"
+        android:title="@string/toolbar_share_title"
         app:showAsAction="always"/>
 
-    <item android:id="@+id/clearbutton"
-        android:title="Clear Notes"
+    <item android:id="@+id/erasebutton"
+        android:title="@string/toolbar_erase_title"
         app:showAsAction="never"/>
 
     <item android:id="@+id/deletebutton"
-        android:title="Delete Forever"
+        android:title="@string/toolbar_delete_title"
         app:showAsAction="never"/>
 
 

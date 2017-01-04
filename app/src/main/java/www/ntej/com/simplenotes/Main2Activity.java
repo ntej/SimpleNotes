@@ -17,30 +17,29 @@ import data.DatabaseHandler;
 import model.CommonMethods;
 import model.NotepadContent;
 
-public class Main2Activity extends AppCompatActivity  {
+public class Main2Activity extends AppCompatActivity {
 
-    private EditText text;
-    boolean notDiscardThroughToolBar = true;
-    boolean noteObjectAlreadyCreated = false;
-    NotepadContent latestNoteObject;
+    private boolean notDiscardThroughToolBar = true;
+    private boolean noteObjectAlreadyCreated = false;
+    private NotepadContent latestNoteObject;
+    private DatabaseHandler dbh;
+    private Toolbar toolbar;
+    private EditText newNoteEditText;
     private ArrayList<NotepadContent> noteslist = new ArrayList<>();
-    DatabaseHandler dbh;
-
-    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        text = (EditText)findViewById(R.id.notepad);
+        newNoteEditText = (EditText) findViewById(R.id.notepad);
 
-        dbh  = new DatabaseHandler(this);
+        dbh = new DatabaseHandler(this);
 
-        text.addTextChangedListener(new TextWatcher() {
+        newNoteEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -49,9 +48,9 @@ public class Main2Activity extends AppCompatActivity  {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                if(!(s.toString().trim().length()==0)) {
+                if (!(s.toString().trim().length() == 0)) {
 
-                    continuousUpdateTextToDB(text.getText().toString());
+                    continuousUpdateTextToDB(newNoteEditText.getText().toString());
                 }
             }
 
@@ -64,13 +63,13 @@ public class Main2Activity extends AppCompatActivity  {
     }
 
     @Override
-    protected void onPostResume() {
-        super.onPostResume();
+    protected void onResume() {
+        super.onResume();
 
         notDiscardThroughToolBar = true;
 
 
-        if(!noteObjectAlreadyCreated) {
+        if (!noteObjectAlreadyCreated) {
             //creating entry
             createDBEntry();
             //getting reference to the entry
@@ -84,8 +83,7 @@ public class Main2Activity extends AppCompatActivity  {
     @Override
     protected void onPause() {
 
-        if(text.getText().toString().trim().length()==0 && notDiscardThroughToolBar)
-        {
+        if (newNoteEditText.getText().toString().trim().length() == 0 && notDiscardThroughToolBar) {
 
             dbh.deleteText(latestNoteObject.getId());
             noteObjectAlreadyCreated = false;
@@ -97,7 +95,7 @@ public class Main2Activity extends AppCompatActivity  {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.activity2menu,menu);
+        getMenuInflater().inflate(R.menu.activity2menu, menu);
         return true;
     }
 
@@ -105,13 +103,11 @@ public class Main2Activity extends AppCompatActivity  {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.clearbutton:
-                if(text.getText().toString().trim().length()!=0) {
-                    text.setText("");
+            case R.id.erasebutton:
+                if (newNoteEditText.getText().toString().trim().length() != 0) {
+                    newNoteEditText.setText("");
                     Toast.makeText(this, "Notes cleared", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                } else {
                     Toast.makeText(this, "Nothing to clear", Toast.LENGTH_SHORT).show();
                 }
                 return true;
@@ -120,22 +116,20 @@ public class Main2Activity extends AppCompatActivity  {
                 notDiscardThroughToolBar = false;
                 dbh.deleteText(latestNoteObject.getId());
                 Toast.makeText(this, "Notes discarded  ", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(Main2Activity.this,MainActivity.class));
+                startActivity(new Intent(Main2Activity.this, MainActivity.class));
                 finish();
                 MainActivity.h.sendEmptyMessage(0);
                 return true;
 
-            case R.id.sharebutton2:
-                if(!CommonMethods.editTextIsEmpty(text.getText().toString())) {
+            case R.id.sharebutton:
+                if (!CommonMethods.editTextIsEmpty(newNoteEditText.getText().toString())) {
 
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_TEXT,text.getText().toString());
-                    sendIntent.setType("text/plain");
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, newNoteEditText.getText().toString());
+                    sendIntent.setType("newNoteEditText/plain");
                     startActivity(sendIntent);
-                }
-                else
-                {
+                } else {
                     Toast.makeText(this, "Are you sure! you want to share nothing?", Toast.LENGTH_SHORT).show();
                 }
                 return true;
@@ -146,15 +140,13 @@ public class Main2Activity extends AppCompatActivity  {
 
     }
 
-    public void continuousUpdateTextToDB(String content)
-    {
+    public void continuousUpdateTextToDB(String content) {
 
-        dbh.upDateNoteText(latestNoteObject.getId(),content);
+        dbh.upDateNoteText(latestNoteObject.getId(), content);
 
     }
 
-    public void createDBEntry()
-    {
+    public void createDBEntry() {
         dbh.storeNoteText("");
         noteslist = dbh.getNotesObjectsAsList();
     }

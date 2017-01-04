@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">SimpleNotes</string>
     <string name="action_settings">Settings</string>
+
+    <!--toolbar strings-->
+    <string name="toolbar_share_title">Share</string>
+    <string name="toolbar_erase_title">Erase Note</string>
+    <string name="toolbar_discard_title">Discard</string>
+    <string name="toolbar_delete_title">Delete Forever</string>
+
+
 </resources>

@@ -16,45 +16,40 @@ import model.NotepadContent;
 
 public class Main3Activity extends AppCompatActivity {
 
-    private EditText text2;
+    private int noteId;
+    private String noteDate;
+    private String initialNoteText;
+    private boolean notesDeletedFromToolBar = false;
+    private DatabaseHandler dbh;
+    private Toolbar toolbar;
+    private EditText existingNoteEditText;
     private TextView datePan;
-    int noteId;
-    String noteDate;
-    String noteText;
-    boolean notesDeletedFromToolBar = false;
-    DatabaseHandler dbh;
-
-    Toolbar toolbar;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
 
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         dbh = new DatabaseHandler(this);
 
-        text2 = (EditText)findViewById(R.id.notepad2);
-        datePan = (TextView)findViewById(R.id.datePan);
-
+        existingNoteEditText = (EditText) findViewById(R.id.notepad2);
+        datePan = (TextView) findViewById(R.id.datePan);
 
 
         NotepadContent notepadObject = (NotepadContent) getIntent().getSerializableExtra("userObj");
 
 
-
-            noteText = notepadObject.getText();
-            text2.setText(noteText);
+        initialNoteText = notepadObject.getText();
+        existingNoteEditText.setText(initialNoteText);
 
         noteId = notepadObject.getId();
         noteDate = notepadObject.getDateAndTime();
 
 
-
-        datePan.setText("Last Edited on "+noteDate);
+        datePan.setText("Last Edited on " + noteDate);
 
     }
 
@@ -63,7 +58,7 @@ public class Main3Activity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        if(!notesDeletedFromToolBar)
+        if (!notesDeletedFromToolBar)
             upDateTextToDB();
 
 
@@ -73,48 +68,41 @@ public class Main3Activity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.activity3menu,menu);
+        getMenuInflater().inflate(R.menu.activity3menu, menu);
 
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.deletebutton:
                 notesDeletedFromToolBar = true;
-               // DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
                 dbh.deleteText(noteId);
                 Toast.makeText(this, "Notes deleted", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(Main3Activity.this,MainActivity.class));
+                startActivity(new Intent(Main3Activity.this, MainActivity.class));
                 finish();
                 MainActivity.h.sendEmptyMessage(0);
                 return true;
 
-            case R.id.clearbutton:
-                if(text2.getText().toString().trim().length()!=0) {
-                    text2.setText("");
+            case R.id.erasebutton:
+                if (existingNoteEditText.getText().toString().trim().length() != 0) {
+                    existingNoteEditText.setText("");
                     Toast.makeText(this, "Notes cleared", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                } else {
                     Toast.makeText(this, "Nothing to clear", Toast.LENGTH_SHORT).show();
                 }
                 return true;
 
-            case R.id.sharebutton3:
-                if(!CommonMethods.editTextIsEmpty(text2.getText().toString())) {
+            case R.id.sharebutton:
+                if (!CommonMethods.editTextIsEmpty(existingNoteEditText.getText().toString())) {
 
-                    //
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_TEXT,text2.getText().toString());
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, existingNoteEditText.getText().toString());
                     sendIntent.setType("text/plain");
                     startActivity(sendIntent);
-                }
-                else
-                {
+                } else {
                     Toast.makeText(this, "Are you sure! you want to share nothing?", Toast.LENGTH_SHORT).show();
                 }
                 return true;
@@ -124,38 +112,31 @@ public class Main3Activity extends AppCompatActivity {
     }
 
 
-    public void upDateTextToDB()
-    {
+    public void upDateTextToDB() {
 
 
-        if(textChanged()) {
-            if(!CommonMethods.editTextIsEmpty(text2.getText().toString())) {
+        if (textChanged()) {
+            if (!CommonMethods.editTextIsEmpty(existingNoteEditText.getText().toString())) {
 
-                dbh.upDateNoteText(noteId, text2.getText().toString());
+                dbh.upDateNoteText(noteId, existingNoteEditText.getText().toString());
 
-            }
-            else
-            {
+            } else {
                 dbh.deleteText(noteId);
-                Toast.makeText(this, "Empty notes! not good, deleted to save you some space for"+ CommonMethods.funPhrases[CommonMethods.ranNumGenerator(CommonMethods.funPhrases.length)], Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Empty notes! not good, deleted to save you some space for" + CommonMethods.funPhrases[CommonMethods.ranNumGenerator(CommonMethods.funPhrases.length)], Toast.LENGTH_SHORT).show();
             }
         }
 
     }
 
-    public boolean textChanged()
-    {
+    public boolean textChanged() {
 
-        if(!(noteText.contentEquals(text2.getText())))
-        {
+        if (!(initialNoteText.contentEquals(existingNoteEditText.getText()))) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
 
-   }
+    }
 
 
 }

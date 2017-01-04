@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/sharebutton2"
+    <item android:id="@+id/sharebutton"
         android:icon="@drawable/ic_action_share_white"
-        android:title="Share Notes"
+        android:title="@string/toolbar_share_title"
         app:showAsAction="always"/>
 
 
-    <item android:id="@+id/clearbutton"
-        android:title="Clear Notes"
+    <item android:id="@+id/erasebutton"
+        android:title="@string/toolbar_erase_title"
         app:showAsAction="never"/>
 
 
     <item android:id="@+id/discardbutton"
-        android:title="Discard Notes"
+        android:title="@string/toolbar_discard_title"
         app:showAsAction="never"/>
 
 </menu>
