@@ -22,7 +22,6 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME ="SimpleNotes.db";
     private long timeInMilliseconds;
-    String TAG = " dbh";
 
     private final ArrayList<NotepadContent> noteslist = new ArrayList<>();
 
@@ -151,6 +150,7 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
 
     /******************************************************************************/
 
+    //Little modified to method(getNotesObjectsAsList) which is called to copy content to encrypted database
     public ArrayList<NotepadContent> getNotesObjectsAsListCopy()
     {
         noteslist.clear();

@@ -145,6 +145,24 @@ public class DatabaseHandlerEncrypted extends SQLiteOpenHelper  {
 
     }
 
+    public void upDateNoteTextListener(int _id, String updatedtext)
+    {
+        String id = Integer.toString(_id);
+        SQLiteDatabase db = this.getReadableDatabase("zxcfvg");
+
+        ContentValues values = new ContentValues();
+        values.put(NotepadContract.NotepadEntry.COLUMN_NAME_CONTENT,updatedtext);
+        values.put(NotepadContract.NotepadEntry.DATE,System.currentTimeMillis());
+
+        String selection = NotepadContract.NotepadEntry._ID + " LIKE ?";
+        String[] selectionArgs = { id };
+
+        db.update(NotepadContract.NotepadEntry.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+    }
+
     public void deleteText(int _id)
     {
 
@@ -160,7 +178,7 @@ public class DatabaseHandlerEncrypted extends SQLiteOpenHelper  {
 
     /*****************************************************************/
 
-    //update 1 method
+    //method to store the data from old unencrypted Db to new encrypted Db
     public void storePastNotes(String text, long millis)
     {
         SQLiteDatabase db = this.getWritableDatabase("zxcfvg");

@@ -23,7 +23,7 @@ public class Main2Activity extends AppCompatActivity {
     private boolean notDiscardThroughToolBar = true;
     private boolean noteObjectAlreadyCreated = false;
     private NotepadContent latestNoteObject;
-    private DatabaseHandlerEncrypted dbh_e;
+    private DatabaseHandlerEncrypted dbh_e,dbh_e_listener;
     private Toolbar toolbar;
     private EditText newNoteEditText;
     private ArrayList<NotepadContent> noteslist = new ArrayList<>();
@@ -39,6 +39,7 @@ public class Main2Activity extends AppCompatActivity {
         newNoteEditText = (EditText) findViewById(R.id.notepad);
 
         dbh_e = new DatabaseHandlerEncrypted(this);
+        dbh_e_listener = new DatabaseHandlerEncrypted(this);
 
         newNoteEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -143,7 +144,8 @@ public class Main2Activity extends AppCompatActivity {
 
     public void continuousUpdateTextToDB(String content) {
 
-        dbh_e.upDateNoteText(latestNoteObject.getId(), content);
+        //dbh_e.upDateNoteText(latestNoteObject.getId(), content);
+        dbh_e_listener.upDateNoteTextListener(latestNoteObject.getId(), content);
 
     }
 
@@ -152,5 +154,9 @@ public class Main2Activity extends AppCompatActivity {
         noteslist = dbh_e.getNotesObjectsAsList();
     }
 
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        dbh_e_listener.close();
+    }
 }

@@ -7,7 +7,6 @@ import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -81,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
-        createEncryptedDbAndCopyContent();
+        createEncryptedDbAndCopyContentFromOldDb();
 
     }
 
@@ -102,14 +101,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void createEncryptedDbAndCopyContent()
+    public void createEncryptedDbAndCopyContentFromOldDb()
     {
         File originalDb = this.getDatabasePath("SimpleNotes.db");
 
-
         if(originalDb.exists())
         {
-            Log.i("TAG","original db exist");
 
             NotepadContent notepadContentObject;
 
@@ -118,13 +115,14 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<NotepadContent> notepadObjects_temp = new ArrayList<>();
             notepadObjects_temp = dbh.getNotesObjectsAsListCopy();
 
+            //Copying content to encrypted db from old unencrypted db
             for(int i =0;i<notepadObjects_temp.size();i++)
             {
                 notepadContentObject = notepadObjects_temp.get(i);
                 dbh_e.storePastNotes(notepadContentObject.getText(),Long.parseLong(notepadContentObject.getDateAndTime()));
             }
 
-            originalDb.delete();
+            originalDb.delete(); //Deleting the old unencrypted db
         }
 
     }
