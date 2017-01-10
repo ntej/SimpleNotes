@@ -2,9 +2,9 @@ package data;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import net.sqlcipher.Cursor;
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
@@ -22,7 +22,7 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME ="SimpleNotes.db";
     private long timeInMilliseconds;
-    String TAG = " dbh";
+    //String TAG = " dbh";
 
     private final ArrayList<NotepadContent> noteslist = new ArrayList<>();
 
@@ -30,6 +30,9 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+
+        SQLiteDatabase.loadLibs(context);
+
     }
 
     @Override
@@ -43,15 +46,15 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
         onCreate(db);
     }
 
-    @Override
-    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        onUpgrade(db, oldVersion, newVersion);
-    }
+//    @Override
+//    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+//        onUpgrade(db, oldVersion, newVersion);
+//    }
 
 
     public void storeNoteText(String text)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase("zxcfvg");
 
         ContentValues values = new ContentValues();
         values.put(NotepadContract.NotepadEntry.COLUMN_NAME_CONTENT,text);
@@ -70,7 +73,7 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
     {
         noteslist.clear();
 
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase("zxcfvg");
 
         String[] projection = {
                 NotepadContract.NotepadEntry._ID,
@@ -121,7 +124,7 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
     public void upDateNoteText(int _id, String updatedtext)
     {
         String id = Integer.toString(_id);
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase("zxcfvg");
 
         ContentValues values = new ContentValues();
         values.put(NotepadContract.NotepadEntry.COLUMN_NAME_CONTENT,updatedtext);
@@ -142,7 +145,7 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
     public void deleteText(int _id)
     {
 
-        SQLiteDatabase dba = this.getWritableDatabase();
+        SQLiteDatabase dba = this.getWritableDatabase("zxcfvg");
 
         String selection = NotepadContract.NotepadEntry._ID + " LIKE ?";
 
