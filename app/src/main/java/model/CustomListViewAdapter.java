@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import data.DatabaseHandler;
+import data.DatabaseHandlerEncrypted;
 import www.ntej.com.simplenotes.Main3Activity;
 import www.ntej.com.simplenotes.MainActivity;
 import www.ntej.com.simplenotes.R;
@@ -30,7 +31,7 @@ public class CustomListViewAdapter extends ArrayAdapter<NotepadContent> {
     private AlertDialog.Builder alertBuilder;
     private AlertDialog alertDialog;
 
-    private DatabaseHandler dbh;
+    private DatabaseHandlerEncrypted dbh_e;
 
     public CustomListViewAdapter(Context context, int resource, ArrayList<NotepadContent> objects) {
         super(context, resource, objects);
@@ -39,7 +40,7 @@ public class CustomListViewAdapter extends ArrayAdapter<NotepadContent> {
         this.layoutResource = resource;
 
         alertBuilder = new AlertDialog.Builder(context);
-        dbh = new DatabaseHandler(context);
+        dbh_e = new DatabaseHandlerEncrypted(context);
 
     }
 
@@ -99,7 +100,7 @@ public class CustomListViewAdapter extends ArrayAdapter<NotepadContent> {
                 alertBuilder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        dbh.deleteText(finalHolder.notepadObject.getId());
+                        dbh_e.deleteText(finalHolder.notepadObject.getId());
                         MainActivity.h.sendEmptyMessage(1);
                     }
                 });

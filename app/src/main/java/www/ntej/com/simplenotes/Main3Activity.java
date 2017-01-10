@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import data.DatabaseHandler;
+import data.DatabaseHandlerEncrypted;
 import model.CommonMethods;
 import model.NotepadContent;
 
@@ -20,7 +21,7 @@ public class Main3Activity extends AppCompatActivity {
     private String noteDate;
     private String initialNoteText;
     private boolean notesDeletedFromToolBar = false;
-    private DatabaseHandler dbh;
+    private DatabaseHandlerEncrypted dbh_e;
     private Toolbar toolbar;
     private EditText existingNoteEditText;
     private TextView datePan;
@@ -33,7 +34,7 @@ public class Main3Activity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        dbh = new DatabaseHandler(this);
+        dbh_e = new DatabaseHandlerEncrypted(this);
 
         existingNoteEditText = (EditText) findViewById(R.id.notepad2);
         datePan = (TextView) findViewById(R.id.datePan);
@@ -78,7 +79,7 @@ public class Main3Activity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.deletebutton:
                 notesDeletedFromToolBar = true;
-                dbh.deleteText(noteId);
+                dbh_e.deleteText(noteId);
                 Toast.makeText(this, "Notes deleted", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(Main3Activity.this, MainActivity.class));
                 finish();
@@ -118,10 +119,10 @@ public class Main3Activity extends AppCompatActivity {
         if (textChanged()) {
             if (!CommonMethods.editTextIsEmpty(existingNoteEditText.getText().toString())) {
 
-                dbh.upDateNoteText(noteId, existingNoteEditText.getText().toString());
+                dbh_e.upDateNoteText(noteId, existingNoteEditText.getText().toString());
 
             } else {
-                dbh.deleteText(noteId);
+                dbh_e.deleteText(noteId);
                 Toast.makeText(this, "Empty notes! not good, deleted to save you some space for" + CommonMethods.funPhrases[CommonMethods.ranNumGenerator(CommonMethods.funPhrases.length)], Toast.LENGTH_SHORT).show();
             }
         }

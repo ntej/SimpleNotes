@@ -14,6 +14,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import data.DatabaseHandler;
+import data.DatabaseHandlerEncrypted;
 import model.CommonMethods;
 import model.NotepadContent;
 
@@ -22,7 +23,7 @@ public class Main2Activity extends AppCompatActivity {
     private boolean notDiscardThroughToolBar = true;
     private boolean noteObjectAlreadyCreated = false;
     private NotepadContent latestNoteObject;
-    private DatabaseHandler dbh;
+    private DatabaseHandlerEncrypted dbh_e;
     private Toolbar toolbar;
     private EditText newNoteEditText;
     private ArrayList<NotepadContent> noteslist = new ArrayList<>();
@@ -37,7 +38,7 @@ public class Main2Activity extends AppCompatActivity {
 
         newNoteEditText = (EditText) findViewById(R.id.notepad);
 
-        dbh = new DatabaseHandler(this);
+        dbh_e = new DatabaseHandlerEncrypted(this);
 
         newNoteEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -85,7 +86,7 @@ public class Main2Activity extends AppCompatActivity {
 
         if (newNoteEditText.getText().toString().trim().length() == 0 && notDiscardThroughToolBar) {
 
-            dbh.deleteText(latestNoteObject.getId());
+            dbh_e.deleteText(latestNoteObject.getId());
             noteObjectAlreadyCreated = false;
 
         }
@@ -114,7 +115,7 @@ public class Main2Activity extends AppCompatActivity {
 
             case R.id.discardbutton:
                 notDiscardThroughToolBar = false;
-                dbh.deleteText(latestNoteObject.getId());
+                dbh_e.deleteText(latestNoteObject.getId());
                 Toast.makeText(this, "Notes discarded  ", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(Main2Activity.this, MainActivity.class));
                 finish();
@@ -142,13 +143,13 @@ public class Main2Activity extends AppCompatActivity {
 
     public void continuousUpdateTextToDB(String content) {
 
-        dbh.upDateNoteText(latestNoteObject.getId(), content);
+        dbh_e.upDateNoteText(latestNoteObject.getId(), content);
 
     }
 
     public void createDBEntry() {
-        dbh.storeNoteText("");
-        noteslist = dbh.getNotesObjectsAsList();
+        dbh_e.storeNoteText("");
+        noteslist = dbh_e.getNotesObjectsAsList();
     }
 
 

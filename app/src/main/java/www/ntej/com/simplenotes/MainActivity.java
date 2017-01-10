@@ -11,16 +11,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import data.DatabaseHandler;
+import data.DatabaseHandlerEncrypted;
 import model.CustomListViewAdapter;
 import model.NotepadContent;
 
 public class MainActivity extends AppCompatActivity {
 
     public static Handler h;
-    private DatabaseHandler dbh;
+    private DatabaseHandlerEncrypted dbh_e;
     private CustomListViewAdapter adapter;
     private ArrayList<NotepadContent> noteslistobjects = new ArrayList<>();
     private Toolbar toolbar;
@@ -32,12 +34,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        dbh = new DatabaseHandler(this);
+        dbh_e = new DatabaseHandlerEncrypted(this);
 
-        noteslistobjects = dbh.getNotesObjectsAsList();
+        noteslistobjects = dbh_e.getNotesObjectsAsList();
 
         adapter = new CustomListViewAdapter(this, R.layout.listrow, noteslistobjects);
         noteslistview = (ListView) findViewById(R.id.noteslist);
@@ -76,8 +80,10 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-    }
 
+        createEncryptedDbAndCopyContent();
+
+    }
 
     @Override
     protected void onResume() {
@@ -90,9 +96,36 @@ public class MainActivity extends AppCompatActivity {
 
         noteslistobjects.clear(); //mandatory for notifyDataSetChanged() to work
 
-        noteslistobjects = dbh.getNotesObjectsAsList();
+        noteslistobjects = dbh_e.getNotesObjectsAsList();
 
         adapter.notifyDataSetChanged();
+
+    }
+
+    public void createEncryptedDbAndCopyContent()
+    {
+        File originalDb = this.getDatabasePath("SimpleNotes.db");
+
+
+        if(originalDb.exists())
+        {
+            Log.i("TAG","original db exist");
+
+            NotepadContent notepadContentObject;
+
+            DatabaseHandler dbh = new DatabaseHandler(this);
+
+            ArrayList<NotepadContent> notepadObjects_temp = new ArrayList<>();
+            notepadObjects_temp = dbh.getNotesObjectsAsListCopy();
+
+            for(int i =0;i<notepadObjects_temp.size();i++)
+            {
+                notepadContentObject = notepadObjects_temp.get(i);
+                dbh_e.storePastNotes(notepadContentObject.getText(),Long.parseLong(notepadContentObject.getDateAndTime()));
+            }
+
+            originalDb.delete();
+        }
 
     }
 }

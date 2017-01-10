@@ -2,9 +2,9 @@ package data;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import net.sqlcipher.Cursor;
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
@@ -16,20 +16,25 @@ import ntej.time.UTCTimeGenerator;
  * Created by navatejareddy on 10/29/16.
  */
 
-public class DatabaseHandler extends SQLiteOpenHelper  {
+public class DatabaseHandlerEncrypted extends SQLiteOpenHelper  {
 
 
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME ="SimpleNotes.db";
+    public static final String DATABASE_NAME ="SimpleNotesE.db";
     private long timeInMilliseconds;
-    String TAG = " dbh";
+    private Context context;
+    //String TAG = " dbh";
 
     private final ArrayList<NotepadContent> noteslist = new ArrayList<>();
 
 
 
-    public DatabaseHandler(Context context) {
+    public DatabaseHandlerEncrypted(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+
+        this.context = context;
+        SQLiteDatabase.loadLibs(context);
+
     }
 
     @Override
@@ -39,19 +44,19 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(NotepadContract.NotepadEntry.SQL_DELETE_ENTRIES);
-        onCreate(db);
+//        db.execSQL(NotepadContract.NotepadEntry.SQL_DELETE_ENTRIES);
+//        onCreate(db);
     }
 
-    @Override
-    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        onUpgrade(db, oldVersion, newVersion);
-    }
+//    @Override
+//    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+//        onUpgrade(db, oldVersion, newVersion);
+//    }
 
 
     public void storeNoteText(String text)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase("zxcfvg");
 
         ContentValues values = new ContentValues();
         values.put(NotepadContract.NotepadEntry.COLUMN_NAME_CONTENT,text);
@@ -64,11 +69,14 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
     }
 
 
+
+
+
     public ArrayList<NotepadContent> getNotesObjectsAsList()
     {
         noteslist.clear();
 
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase("zxcfvg");
 
         String[] projection = {
                 NotepadContract.NotepadEntry._ID,
@@ -119,7 +127,7 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
     public void upDateNoteText(int _id, String updatedtext)
     {
         String id = Integer.toString(_id);
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase("zxcfvg");
 
         ContentValues values = new ContentValues();
         values.put(NotepadContract.NotepadEntry.COLUMN_NAME_CONTENT,updatedtext);
@@ -140,7 +148,7 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
     public void deleteText(int _id)
     {
 
-        SQLiteDatabase dba = this.getWritableDatabase();
+        SQLiteDatabase dba = this.getWritableDatabase("zxcfvg");
 
         String selection = NotepadContract.NotepadEntry._ID + " LIKE ?";
 
@@ -149,61 +157,20 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
         dba.delete(NotepadContract.NotepadEntry.TABLE_NAME, selection,selectionArgs);
     }
 
-    /******************************************************************************/
 
-    public ArrayList<NotepadContent> getNotesObjectsAsListCopy()
+    /*****************************************************************/
+
+    //update 1 method
+    public void storePastNotes(String text, long millis)
     {
-        noteslist.clear();
+        SQLiteDatabase db = this.getWritableDatabase("zxcfvg");
+        ContentValues values = new ContentValues();
+        values.put(NotepadContract.NotepadEntry.COLUMN_NAME_CONTENT,text);
+        values.put(NotepadContract.NotepadEntry.DATE,millis);
 
-        SQLiteDatabase db = this.getReadableDatabase();
+        db.insert(NotepadContract.NotepadEntry.TABLE_NAME,null,values);
 
-        String[] projection = {
-                NotepadContract.NotepadEntry._ID,
-                NotepadContract.NotepadEntry.COLUMN_NAME_CONTENT,
-                NotepadContract.NotepadEntry.DATE
-        };
-
-        String sortOrder = NotepadContract.NotepadEntry.DATE + " DESC";
-        Cursor c = db.query(
-                NotepadContract.NotepadEntry.TABLE_NAME,
-                projection,
-                null,
-                null,
-                null,
-                null,
-                sortOrder
-        );
-
-        if(c.moveToFirst())
-        {
-            do {
-                NotepadContent notepadContent = new NotepadContent();
-
-                notepadContent.setText(c.getString(c.getColumnIndexOrThrow(NotepadContract.NotepadEntry.COLUMN_NAME_CONTENT)));
-
-                notepadContent.setId(c.getInt(c.getColumnIndexOrThrow(NotepadContract.NotepadEntry._ID)));
-
-                timeInMilliseconds = c.getLong(c.getColumnIndexOrThrow(NotepadContract.NotepadEntry.DATE));
-
-                //Library by ntej. Check intellij IDE project for more details
-                //UTCTimeGenerator utcTimeGenerator = new UTCTimeGenerator(timeInMilliseconds);
-
-               // notepadContent.setDateAndTime(utcTimeGenerator.getMonthandDate()+" at " +utcTimeGenerator.getTime());
-
-                notepadContent.setDateAndTime(Long.toString(timeInMilliseconds));
-
-
-                noteslist.add(notepadContent);
-
-            }while(c.moveToNext());
-        }
-
-        c.close();
         db.close();
-
-        return noteslist;
-
-
     }
 
 
