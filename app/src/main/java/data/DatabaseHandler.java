@@ -19,7 +19,7 @@ import ntej.time.UTCTimeGenerator;
 public class DatabaseHandler extends SQLiteOpenHelper  {
 
 
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME ="SimpleNotes.db";
     private long timeInMilliseconds;
     //String TAG = " dbh";
@@ -42,8 +42,8 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(NotepadContract.NotepadEntry.SQL_DELETE_ENTRIES);
-        onCreate(db);
+//        db.execSQL(NotepadContract.NotepadEntry.SQL_DELETE_ENTRIES);
+//        onCreate(db);
     }
 
 //    @Override
