@@ -20,7 +20,7 @@ android {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:design:24.2.1'
+    compile 'com.android.support:design:24.2.1' //for new widgets with backward support
     compile project(':UTCTimeGenerator')
     compile 'net.zetetic:android-database-sqlcipher:3.5.4'
 }
