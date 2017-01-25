@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import data.DatabaseHandler;
 import data.DatabaseHandlerEncrypted;
 import www.ntej.com.simplenotes.Main3Activity;
 import www.ntej.com.simplenotes.MainActivity;

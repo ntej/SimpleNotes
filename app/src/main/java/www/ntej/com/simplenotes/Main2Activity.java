@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import data.DatabaseHandler;
 import data.DatabaseHandlerEncrypted;
 import model.CommonMethods;
 import model.NotepadContent;
@@ -144,7 +143,6 @@ public class Main2Activity extends AppCompatActivity {
 
     public void continuousUpdateTextToDB(String content) {
 
-        //dbh_e.upDateNoteText(latestNoteObject.getId(), content);
         dbh_e_listener.upDateNoteTextListener(latestNoteObject.getId(), content);
 
     }

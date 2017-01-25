@@ -10,10 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
 
-import java.io.File;
 import java.util.ArrayList;
 
-import data.DatabaseHandler;
 import data.DatabaseHandlerEncrypted;
 import model.CustomListViewAdapter;
 import model.NotepadContent;
@@ -80,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
-        createEncryptedDbAndCopyContentFromOldDb();
 
     }
 
@@ -101,29 +98,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void createEncryptedDbAndCopyContentFromOldDb()
-    {
-        File originalDb = this.getDatabasePath("SimpleNotes.db");
-
-        if(originalDb.exists())
-        {
-
-            NotepadContent notepadContentObject;
-
-            DatabaseHandler dbh = new DatabaseHandler(this);
-
-            ArrayList<NotepadContent> notepadObjects_temp = new ArrayList<>();
-            notepadObjects_temp = dbh.getNotesObjectsAsListCopy();
-
-            //Copying content to encrypted db from old unencrypted db
-            for(int i =0;i<notepadObjects_temp.size();i++)
-            {
-                notepadContentObject = notepadObjects_temp.get(i);
-                dbh_e.storePastNotes(notepadContentObject.getText(),Long.parseLong(notepadContentObject.getDateAndTime()));
-            }
-
-            originalDb.delete(); //Deleting the old unencrypted db
-        }
-
-    }
 }

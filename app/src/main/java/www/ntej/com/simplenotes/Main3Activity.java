@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import data.DatabaseHandler;
 import data.DatabaseHandlerEncrypted;
 import model.CommonMethods;
 import model.NotepadContent;
