@@ -2,8 +2,6 @@ package model;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import data.DatabaseHandlerEncrypted;
-import www.ntej.com.simplenotes.Main3Activity;
-import www.ntej.com.simplenotes.MainActivity;
+import www.ntej.com.simplenotes.NotesListFragment;
 import www.ntej.com.simplenotes.R;
 
 /**
@@ -32,6 +29,13 @@ public class CustomListViewAdapter extends ArrayAdapter<NotepadContent> {
 
     private DatabaseHandlerEncrypted dbh_e;
 
+    public CustomAdapterOnClickListener mOnNoteObjectListener;
+
+    public interface CustomAdapterOnClickListener
+    {
+         void ClickedOnNoteObject(NotepadContent notepadObject);
+    }
+
     public CustomListViewAdapter(Context context, int resource, ArrayList<NotepadContent> objects) {
         super(context, resource, objects);
 
@@ -40,6 +44,15 @@ public class CustomListViewAdapter extends ArrayAdapter<NotepadContent> {
 
         alertBuilder = new AlertDialog.Builder(context);
         dbh_e = new DatabaseHandlerEncrypted(context);
+
+        try
+        {
+            mOnNoteObjectListener = (CustomAdapterOnClickListener) context;
+        }
+        catch (ClassCastException e)
+        {
+
+        }
 
     }
 
@@ -78,13 +91,15 @@ public class CustomListViewAdapter extends ArrayAdapter<NotepadContent> {
                     @Override
                     public void onClick(View v) {
 
-                        Intent i = new Intent(context, Main3Activity.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        Bundle mBundle = new Bundle();
-                        mBundle.putSerializable("userObj", finalHolder.notepadObject);
+                       // Intent i = new Intent(context, EditNoteFragment.class);
+                        //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        //Bundle mBundle = new Bundle();
+                        //mBundle.putSerializable("userObj", finalHolder.notepadObject);
 
-                        i.putExtras(mBundle);
-                        context.startActivity(i);
+                        //i.putExtras(mBundle);
+                        //context.startActivity(i);
+
+                        mOnNoteObjectListener.ClickedOnNoteObject(finalHolder.notepadObject);
 
                     }
                 });
@@ -100,7 +115,7 @@ public class CustomListViewAdapter extends ArrayAdapter<NotepadContent> {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dbh_e.deleteText(finalHolder.notepadObject.getId());
-                        MainActivity.h.sendEmptyMessage(1);
+                        NotesListFragment.h.sendEmptyMessage(1);
                     }
                 });
 

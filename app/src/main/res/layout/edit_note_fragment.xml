@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    tools:context="www.ntej.com.simplenotes.Main3Activity">
+    tools:context="www.ntej.com.simplenotes.EditNoteFragment">
     <!--Support toolbar-->
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
