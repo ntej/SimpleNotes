@@ -30,7 +30,7 @@ public class NotesListFragment extends Fragment implements CustomListViewAdapter
     @Override
     public void ClickedOnNoteObject(NotepadContent notepadObject) {
 
-        getNoteMethodListener.sendNoteObject(notepadObject);
+        getNoteMethodListener.getNoteObject(notepadObject);
     }
 
     private ListView noteslistview;
@@ -47,7 +47,7 @@ public class NotesListFragment extends Fragment implements CustomListViewAdapter
 
     interface AdapterOnClickListener
     {
-        public void sendNoteObject(NotepadContent noteObject);
+        public void getNoteObject(NotepadContent noteObject);
     }
 
     @Override
