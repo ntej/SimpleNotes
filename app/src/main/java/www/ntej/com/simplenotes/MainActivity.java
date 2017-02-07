@@ -1,3 +1,5 @@
+/*Modified by Balaji*/
+
 package www.ntej.com.simplenotes;
 
 import android.content.Intent;
