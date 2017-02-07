@@ -42,12 +42,12 @@ public class NotesListFragment extends Fragment implements CustomListViewAdapter
 
     interface AddNoteButtonListener
     {
-        public void addNote();
+         void addNote();
     }
 
     interface AdapterOnClickListener
     {
-        public void getNoteObject(NotepadContent noteObject);
+         void getNoteObject(NotepadContent noteObject);
     }
 
     @Override
@@ -62,6 +62,7 @@ public class NotesListFragment extends Fragment implements CustomListViewAdapter
         dbh_e = new DatabaseHandlerEncrypted(getActivity());
         //getting data from the database
         noteslistobjects = dbh_e.getNotesObjectsAsList();
+        dbh_e.close();
 
         //instantiating the adapter
         adapter = new CustomListViewAdapter(getActivity(), R.layout.listrow, noteslistobjects);
@@ -129,7 +130,9 @@ public class NotesListFragment extends Fragment implements CustomListViewAdapter
 
         noteslistobjects.clear(); //mandatory for notifyDataSetChanged() to work
 
+       // dbh_e = new DatabaseHandlerEncrypted(getActivity());
         noteslistobjects = dbh_e.getNotesObjectsAsList();
+        dbh_e.close();
 
         adapter.notifyDataSetChanged();
 

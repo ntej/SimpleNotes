@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <fragment class="www.ntej.com.simplenotes.NotesListFragment"
-        android:id="@+id/noteslist"
-        android:layout_width="match_parent" android:layout_height="match_parent"
-        tools:layout="@layout/notes_list_fragment" />
+    <LinearLayout
+        android:id="@+id/noteslist_container"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></LinearLayout>
 
-</FrameLayout>
+
+</LinearLayout>
