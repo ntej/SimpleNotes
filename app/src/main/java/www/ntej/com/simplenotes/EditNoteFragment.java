@@ -25,7 +25,7 @@ public class EditNoteFragment extends Fragment {
 
     private int noteId;
     private String noteDate;
-    private String initialNoteText;
+    private String initialNoteText = "";
     private boolean notesDeletedFromToolBar = false;
     private DatabaseHandlerEncrypted dbh_e;
     private Toolbar toolbar;
@@ -56,15 +56,15 @@ public class EditNoteFragment extends Fragment {
     //called from Hosting Activity
     public void setNoteContent(NotepadContent notepadObject)
     {
-        initialNoteText = notepadObject.getText();
-        existingNoteEditText.setText(initialNoteText);
+            initialNoteText = notepadObject.getText();
 
-        noteId = notepadObject.getId();
-        noteDate = notepadObject.getDateAndTime();
+            existingNoteEditText.setText(initialNoteText);
+
+            noteId = notepadObject.getId();
+            noteDate = notepadObject.getDateAndTime();
 
 
-        datePan.setText("Last Edited on " + noteDate);
-
+            datePan.setText("Last Edited on " + noteDate);
     }
 
 

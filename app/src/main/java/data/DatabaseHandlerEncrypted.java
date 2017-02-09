@@ -95,29 +95,33 @@ public class DatabaseHandlerEncrypted extends SQLiteOpenHelper  {
                 sortOrder
         );
 
-        if(c.moveToFirst())
-        {
-            do {
-                NotepadContent notepadContent = new NotepadContent();
+        try {
+            if (c.moveToFirst()) {
+                do {
+                    NotepadContent notepadContent = new NotepadContent();
 
-                notepadContent.setText(c.getString(c.getColumnIndexOrThrow(NotepadContract.NotepadEntry.COLUMN_NAME_CONTENT)));
+                    notepadContent.setText(c.getString(c.getColumnIndexOrThrow(NotepadContract.NotepadEntry.COLUMN_NAME_CONTENT)));
 
-                notepadContent.setId(c.getInt(c.getColumnIndexOrThrow(NotepadContract.NotepadEntry._ID)));
+                    notepadContent.setId(c.getInt(c.getColumnIndexOrThrow(NotepadContract.NotepadEntry._ID)));
 
-                timeInMilliseconds = c.getLong(c.getColumnIndexOrThrow(NotepadContract.NotepadEntry.DATE));
+                    timeInMilliseconds = c.getLong(c.getColumnIndexOrThrow(NotepadContract.NotepadEntry.DATE));
 
-                //Library by ntej. Check intellij IDE project for more details
-                UTCTimeGenerator utcTimeGenerator = new UTCTimeGenerator(timeInMilliseconds);
+                    //Library by ntej. Check intellij IDE project for more details
+                    UTCTimeGenerator utcTimeGenerator = new UTCTimeGenerator(timeInMilliseconds);
 
-                notepadContent.setDateAndTime(utcTimeGenerator.getMonthandDate()+" at " +utcTimeGenerator.getTime());
+                    notepadContent.setDateAndTime(utcTimeGenerator.getMonthandDate() + " at " + utcTimeGenerator.getTime());
 
-                noteslist.add(notepadContent);
+                    noteslist.add(notepadContent);
 
-            }while(c.moveToNext());
+                } while (c.moveToNext());
+            }
         }
 
-        c.close();
-        db.close();
+        finally {
+            c.close();
+            db.close();
+        }
+
 
         return noteslist;
 
@@ -179,17 +183,17 @@ public class DatabaseHandlerEncrypted extends SQLiteOpenHelper  {
     /*****************************************************************/
 
     //method to store the data from old unencrypted Db to new encrypted Db
-    public void storePastNotes(String text, long millis)
-    {
-        SQLiteDatabase db = this.getWritableDatabase("zxcfvg");
-        ContentValues values = new ContentValues();
-        values.put(NotepadContract.NotepadEntry.COLUMN_NAME_CONTENT,text);
-        values.put(NotepadContract.NotepadEntry.DATE,millis);
-
-        db.insert(NotepadContract.NotepadEntry.TABLE_NAME,null,values);
-
-        db.close();
-    }
+//    public void storePastNotes(String text, long millis)
+//    {
+//        SQLiteDatabase db = this.getWritableDatabase("zxcfvg");
+//        ContentValues values = new ContentValues();
+//        values.put(NotepadContract.NotepadEntry.COLUMN_NAME_CONTENT,text);
+//        values.put(NotepadContract.NotepadEntry.DATE,millis);
+//
+//        db.insert(NotepadContract.NotepadEntry.TABLE_NAME,null,values);
+//
+//        db.close();
+//    }
 
 
 }

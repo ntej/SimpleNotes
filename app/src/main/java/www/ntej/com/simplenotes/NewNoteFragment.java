@@ -189,8 +189,6 @@ public class NewNoteFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        dbh_e_listener.close();
-        dbh_e.close();
     }
 
     @Override

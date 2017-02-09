@@ -19,7 +19,7 @@ import data.DatabaseHandlerEncrypted;
 import model.CustomListViewAdapter;
 import model.NotepadContent;
 
-public class NotesListFragment extends Fragment implements CustomListViewAdapter.CustomAdapterOnClickListener {
+public class NotesListFragment extends Fragment  {
 
     public static Handler h;
     private DatabaseHandlerEncrypted dbh_e;
@@ -27,28 +27,19 @@ public class NotesListFragment extends Fragment implements CustomListViewAdapter
     private ArrayList<NotepadContent> noteslistobjects = new ArrayList<>();
     private Toolbar toolbar;
 
-    @Override
-    public void ClickedOnNoteObject(NotepadContent notepadObject) {
-
-        getNoteMethodListener.getNoteObject(notepadObject);
-    }
 
     private ListView noteslistview;
     private FloatingActionButton fab;
 
     //Interfaced to be implemented by hosted activities
     AddNoteButtonListener addNoteMethodListener;
-    AdapterOnClickListener getNoteMethodListener;
+    //AdapterOnClickListener getNoteMethodListener;
 
     interface AddNoteButtonListener
     {
          void addNote();
     }
 
-    interface AdapterOnClickListener
-    {
-         void getNoteObject(NotepadContent noteObject);
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,7 +53,7 @@ public class NotesListFragment extends Fragment implements CustomListViewAdapter
         dbh_e = new DatabaseHandlerEncrypted(getActivity());
         //getting data from the database
         noteslistobjects = dbh_e.getNotesObjectsAsList();
-        dbh_e.close();
+
 
         //instantiating the adapter
         adapter = new CustomListViewAdapter(getActivity(), R.layout.listrow, noteslistobjects);
@@ -111,6 +102,10 @@ public class NotesListFragment extends Fragment implements CustomListViewAdapter
                 //startActivity(new Intent(NotesListFragment.this, NewNoteFragment.class));
                 addNoteMethodListener.addNote();
 
+
+                //called to update list view when new note is created
+                refresh();
+
             }
         });
 
@@ -145,7 +140,6 @@ public class NotesListFragment extends Fragment implements CustomListViewAdapter
         try
         {
             addNoteMethodListener = (AddNoteButtonListener)activity;
-            getNoteMethodListener = (AdapterOnClickListener)activity;
 
         }
         catch(ClassCastException e)

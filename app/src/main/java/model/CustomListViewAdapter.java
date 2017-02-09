@@ -1,7 +1,6 @@
 package model;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import data.DatabaseHandlerEncrypted;
-import www.ntej.com.simplenotes.NotesListFragment;
 import www.ntej.com.simplenotes.R;
 
 /**
@@ -60,7 +58,7 @@ public class CustomListViewAdapter extends ArrayAdapter<NotepadContent> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         View row = convertView;
-        ViewHolder holder;
+        final ViewHolder holder;
 
         if (row == null || row.getTag() == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -104,34 +102,34 @@ public class CustomListViewAdapter extends ArrayAdapter<NotepadContent> {
                     }
                 });
 
-        row.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-
-                alertBuilder.setTitle("QuickView");
-                alertBuilder.setMessage(finalHolder.notepadObject.getText());
-
-                alertBuilder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dbh_e.deleteText(finalHolder.notepadObject.getId());
-                        NotesListFragment.h.sendEmptyMessage(1);
-                    }
-                });
-
-                alertBuilder.setNeutralButton("Dismiss", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-
-                alertDialog = alertBuilder.create();
-                alertDialog.show();
-
-                return true;
-            }
-        });
+//        row.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//
+//                alertBuilder.setTitle("QuickView");
+//                alertBuilder.setMessage(finalHolder.notepadObject.getText());
+//
+//                alertBuilder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dbh_e.deleteText(finalHolder.notepadObject.getId());
+//                        NotesListFragment.h.sendEmptyMessage(1);
+//                    }
+//                });
+//
+//                alertBuilder.setNeutralButton("Dismiss", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//
+//                alertDialog = alertBuilder.create();
+//                alertDialog.show();
+//
+//                return true;
+//            }
+//        });
 
         return row;
 
