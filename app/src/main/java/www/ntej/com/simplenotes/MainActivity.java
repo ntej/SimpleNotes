@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import model.CustomListViewAdapter;
 import model.NotepadContent;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
     boolean isLargeOrXlargeScreen;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -77,36 +79,35 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void ClickedOnNoteObject(NotepadContent notepadObject) {
 
-        if(isLargeOrXlargeScreen)
-        {
-            //double pan
+        Toast.makeText(getApplicationContext(),"Clicked",Toast.LENGTH_SHORT).show();
 
-            if(getSupportFragmentManager().findFragmentById(R.id.new_edit_notes_container)==null)
-            {
+
+            if (isLargeOrXlargeScreen) {
+                //double pan
+
+                if (getSupportFragmentManager().findFragmentById(R.id.new_edit_notes_container) == null) {
+                    fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.add(R.id.new_edit_notes_container, editNoteFragment);
+                    fragmentTransaction.commit();
+
+                } else {
+                    fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.new_edit_notes_container, editNoteFragment);
+                    fragmentTransaction.commit();
+                }
+
+            } else {
+                //single pan
                 fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.new_edit_notes_container, editNoteFragment);
+                fragmentTransaction.replace(R.id.noteslist_container, editNoteFragment);
+                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
             }
-            else
-            {
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.new_edit_notes_container, editNoteFragment);
-                fragmentTransaction.commit();
-            }
+
+            editNoteFragment.setNoteContent(notepadObject);
 
         }
-        else
-        {
-            //single pan
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.noteslist_container,editNoteFragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-
-        }
-        editNoteFragment.setNoteContent(notepadObject);
-    }
 
     @Override
     public void addNote() {
@@ -154,5 +155,22 @@ public class MainActivity extends AppCompatActivity implements
             super.onBackPressed();
         }
     }
+
+//    public byte[] getSerilizedNoteObject(NotepadContent notepadContent) throws IOException
+//    {
+//        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//        ObjectOutput out =new ObjectOutputStream(bos); ;
+//
+//
+//        out.writeObject(notepadContent);
+//        byte[] noteBytes = bos.toByteArray();
+//
+//        out.close();
+//        bos.close();
+//
+//
+//        return noteBytes;
+//
+//    }
 
 }

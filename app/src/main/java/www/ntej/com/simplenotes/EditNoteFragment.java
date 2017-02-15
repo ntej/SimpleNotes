@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,6 +33,8 @@ public class EditNoteFragment extends Fragment {
     private EditText existingNoteEditText;
     private TextView datePan;
 
+ //   NotepadContent globalNoteObject;
+
     //interface implemented by hosting activity
     DeleteNoteListener deleteNoteMethodListener;
 
@@ -56,15 +59,21 @@ public class EditNoteFragment extends Fragment {
     //called from Hosting Activity
     public void setNoteContent(NotepadContent notepadObject)
     {
-            initialNoteText = notepadObject.getText();
-
-            existingNoteEditText.setText(initialNoteText);
-
-            noteId = notepadObject.getId();
-            noteDate = notepadObject.getDateAndTime();
 
 
-            datePan.setText("Last Edited on " + noteDate);
+            Log.i("EditActivity",notepadObject.getText());
+        Log.i("EditActivity",Integer.toString(notepadObject.getId()));
+        Log.i("EditActivity",notepadObject.getDateAndTime());
+
+//            initialNoteText = notepadObject.getText();
+//
+           existingNoteEditText.setText("Testing");
+//
+//           noteId = notepadObject.getId();
+//           noteDate = notepadObject.getDateAndTime();
+//
+//
+//           datePan.setText("Last Edited on " + noteDate);
     }
 
 
@@ -86,15 +95,15 @@ public class EditNoteFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        if (!notesDeletedFromToolBar)
-            upDateTextToDB();
-
-
-    }
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//
+//        if (!notesDeletedFromToolBar)
+//            upDateTextToDB();
+//
+//
+//    }
 
 
     @Override
@@ -183,5 +192,19 @@ public class EditNoteFragment extends Fragment {
 
         }
     }
+
+//    public NotepadContent getDeserilizedNoteObject(byte[] noteByteArray) throws IOException,ClassNotFoundException
+//    {
+//        ByteArrayInputStream bis = new ByteArrayInputStream(noteByteArray);
+//        ObjectInput in = new ObjectInputStream(bis);
+//
+//        NotepadContent noteObject =  (NotepadContent)in.readObject();
+//
+//        bis.close();
+//        in.close();
+//
+//
+//        return noteObject;
+//    }
 }
 
