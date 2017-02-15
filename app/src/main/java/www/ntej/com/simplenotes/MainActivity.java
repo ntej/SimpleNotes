@@ -17,9 +17,9 @@ public class MainActivity extends AppCompatActivity implements
 
 
 {
-    NewNoteFragment newNoteFragment = new NewNoteFragment();
-    EditNoteFragment editNoteFragment = new EditNoteFragment();
-    NotesListFragment notesListFragment = new NotesListFragment();
+    NewNoteFragment newNoteFragment;
+    EditNoteFragment editNoteFragment;
+    NotesListFragment notesListFragment;
 
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
@@ -33,6 +33,11 @@ public class MainActivity extends AppCompatActivity implements
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        newNoteFragment = new NewNoteFragment();
+        editNoteFragment = new EditNoteFragment();
+        notesListFragment = new NotesListFragment();
+
 
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
@@ -82,30 +87,43 @@ public class MainActivity extends AppCompatActivity implements
         Toast.makeText(getApplicationContext(),"Clicked",Toast.LENGTH_SHORT).show();
 
 
-            if (isLargeOrXlargeScreen) {
+            if (isLargeOrXlargeScreen)
+            {
                 //double pan
 
                 if (getSupportFragmentManager().findFragmentById(R.id.new_edit_notes_container) == null) {
                     fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.add(R.id.new_edit_notes_container, editNoteFragment);
                     fragmentTransaction.commit();
+                    editNoteFragment.setNoteContent(notepadObject);
 
-                } else {
+
+
+                }
+                else
+                {
                     fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.new_edit_notes_container, editNoteFragment);
                     fragmentTransaction.commit();
+                    editNoteFragment.setNoteContent(notepadObject);
+
                 }
 
-            } else {
+            }
+            else
+            {
                 //single pan
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.noteslist_container, editNoteFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+                editNoteFragment.setNoteContent(notepadObject);
+
+
 
             }
 
-            editNoteFragment.setNoteContent(notepadObject);
+
 
         }
 

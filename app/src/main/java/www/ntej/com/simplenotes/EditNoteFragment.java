@@ -3,11 +3,9 @@ package www.ntej.com.simplenotes;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,14 +22,18 @@ import model.NotepadContent;
 
 public class EditNoteFragment extends Fragment {
 
-    private int noteId;
-    private String noteDate;
-    private String initialNoteText = "";
+
     private boolean notesDeletedFromToolBar = false;
     private DatabaseHandlerEncrypted dbh_e;
     private Toolbar toolbar;
     private EditText existingNoteEditText;
     private TextView datePan;
+
+
+    private String initialNoteText = "";
+    private int noteId;
+    private String noteDate;
+
 
  //   NotepadContent globalNoteObject;
 
@@ -56,54 +58,51 @@ public class EditNoteFragment extends Fragment {
 
     }
 
-    //called from Hosting Activity
-    public void setNoteContent(NotepadContent notepadObject)
-    {
 
-
-            Log.i("EditActivity",notepadObject.getText());
-        Log.i("EditActivity",Integer.toString(notepadObject.getId()));
-        Log.i("EditActivity",notepadObject.getDateAndTime());
-
-//            initialNoteText = notepadObject.getText();
-//
-           existingNoteEditText.setText("Testing");
-//
-//           noteId = notepadObject.getId();
-//           noteDate = notepadObject.getDateAndTime();
-//
-//
-//           datePan.setText("Last Edited on " + noteDate);
-    }
-
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.edit_note_fragment,container,false);
 
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
-
         existingNoteEditText = (EditText) view.findViewById(R.id.notepad2);
         datePan = (TextView) view.findViewById(R.id.datePan);
 
+        existingNoteEditText.setText(initialNoteText);
+        datePan.setText("Last Edited on " + noteDate);
 
 
         return view;
     }
 
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//
-//        if (!notesDeletedFromToolBar)
-//            upDateTextToDB();
-//
-//
-//    }
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (!notesDeletedFromToolBar)
+            upDateTextToDB();
+
+
+    }
+
+    //called from Hosting Activity
+    public void setNoteContent(NotepadContent notepadObject)
+    {
+
+
+        //         Log.i("EditActivity",notepadObject.getText());
+        //     Log.i("EditActivity",Integer.toString(notepadObject.getId()));
+        //     Log.i("EditActivity",notepadObject.getDateAndTime());
+
+        initialNoteText = notepadObject.getText();
+        noteId = notepadObject.getId();
+        noteDate = notepadObject.getDateAndTime();
+
+
+
+    }
 
 
     @Override
