@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
+import android.util.Log;
 
 import model.CustomListViewAdapter;
 import model.NotepadContent;
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void ClickedOnNoteObject(NotepadContent notepadObject) {
 
-        Toast.makeText(getApplicationContext(),"Clicked",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),"Clicked",Toast.LENGTH_SHORT).show();
 
 
             if (isLargeOrXlargeScreen)
@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements
                 //double pan
 
                 if (getSupportFragmentManager().findFragmentById(R.id.new_edit_notes_container) == null) {
+                    Log.i("MyActivity","is not null");
                     fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.add(R.id.new_edit_notes_container, editNoteFragment);
                     fragmentTransaction.commit();
