@@ -94,18 +94,18 @@ public class Main3Activity extends AppCompatActivity {
                 }
                 return true;
 
-            case R.id.sharebutton:
-                if (!CommonMethods.editTextIsEmpty(existingNoteEditText.getText().toString())) {
-
-                    Intent sendIntent = new Intent();
-                    sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, existingNoteEditText.getText().toString());
-                    sendIntent.setType("text/plain");
-                    startActivity(sendIntent);
-                } else {
-                    Toast.makeText(this, "Are you sure! you want to share nothing?", Toast.LENGTH_SHORT).show();
-                }
-                return true;
+//            case R.id.sharebutton:
+//                if (!CommonMethods.editTextIsEmpty(existingNoteEditText.getText().toString())) {
+//
+//                    Intent sendIntent = new Intent();
+//                    sendIntent.setAction(Intent.ACTION_SEND);
+//                    sendIntent.putExtra(Intent.EXTRA_TEXT, existingNoteEditText.getText().toString());
+//                    sendIntent.setType("text/plain");
+//                    startActivity(sendIntent);
+//                } else {
+//                    Toast.makeText(this, "Are you sure! you want to share nothing?", Toast.LENGTH_SHORT).show();
+//                }
+//                return true;
         }
 
         return super.onOptionsItemSelected(item);

@@ -4,7 +4,7 @@
 
     <!--toolbar strings-->
     <string name="toolbar_share_title">Share</string>
-    <string name="toolbar_erase_title">Erase Note</string>
+    <string name="toolbar_erase_title">Erase</string>
     <string name="toolbar_discard_title">Discard</string>
     <string name="toolbar_delete_title">Delete Forever</string>
 

@@ -121,18 +121,18 @@ public class Main2Activity extends AppCompatActivity {
                 MainActivity.h.sendEmptyMessage(0);
                 return true;
 
-            case R.id.sharebutton:
-                if (!CommonMethods.editTextIsEmpty(newNoteEditText.getText().toString())) {
-
-                    Intent sendIntent = new Intent();
-                    sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, newNoteEditText.getText().toString());
-                    sendIntent.setType("newNoteEditText/plain");
-                    startActivity(sendIntent);
-                } else {
-                    Toast.makeText(this, "Are you sure! you want to share nothing?", Toast.LENGTH_SHORT).show();
-                }
-                return true;
+//            case R.id.sharebutton:
+//                if (!CommonMethods.editTextIsEmpty(newNoteEditText.getText().toString())) {
+//
+//                    Intent sendIntent = new Intent();
+//                    sendIntent.setAction(Intent.ACTION_SEND);
+//                    sendIntent.putExtra(Intent.EXTRA_TEXT, newNoteEditText.getText().toString());
+//                    sendIntent.setType("newNoteEditText/plain");
+//                    startActivity(sendIntent);
+//                } else {
+//                    Toast.makeText(this, "Are you sure! you want to share nothing?", Toast.LENGTH_SHORT).show();
+//                }
+//                return true;
 
         }
 

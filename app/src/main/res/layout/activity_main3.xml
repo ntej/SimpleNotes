@@ -11,12 +11,13 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="@dimen/tool_bar_height"
         android:background="?attr/colorPrimary"
         android:elevation="@dimen/tool_bar_elevation"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextAppearance="@style/Toolbar.TitleText"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -41,7 +42,8 @@
                     android:paddingLeft="@dimen/note_pad_left_padding"
                     android:paddingRight="@dimen/note_pad_right_padding"
                     android:paddingBottom="@dimen/note_pad_bottom_padding"
-                    android:textAlignment="textStart" />
+                    android:textAlignment="textStart"
+                    android:textSize="40sp"/>
             </ScrollView>
         </RelativeLayout>
 

@@ -12,12 +12,13 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="@dimen/tool_bar_height"
         android:background="?attr/colorPrimary"
         android:elevation="@dimen/tool_bar_elevation"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:fitsSystemWindows="true"
+        app:titleTextAppearance="@style/Toolbar.TitleText"
         />
 
     <RelativeLayout
