@@ -36,8 +36,6 @@
         android:paddingBottom="@dimen/note_pad_bottom_padding"
         android:background="@color/colorNotePadEditText"
         android:textSize="40sp"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         />
     </ScrollView>
 
