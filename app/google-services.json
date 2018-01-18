@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "965820998220",
+    "project_id": "firebase-simplenotes"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965820998220:android:dcbddca7f406094d",
+        "android_client_info": {
+          "package_name": "www.ntej.com.simplenotes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "965820998220-ns7q47frdrid8a5sfi47n81gahs86uia.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "965820998220-1vokhvkpvvpdk3na405tnpd1fki2idr4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "www.ntej.com.simplenotes",
+            "certificate_hash": "a88720ed90b431b57f5312f30c0a8b87ea78cb24"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwThgxsfMJA79omUxPK61dWDKfdVH4mgY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
