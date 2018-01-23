@@ -3,10 +3,10 @@ package model;
 import java.util.Random;
 
 /**
- * Created by navatejareddy on 11/1/16.
+ * Util class
  */
 
-public class CommonMethods {
+public class Util {
 
     public static String[] funPhrases ={
             " Katyperry Songs",
@@ -27,12 +27,4 @@ public class CommonMethods {
             return false;
         }
     }
-
-    public static int ranNumGenerator(int seed)
-    {
-        Random rand = new Random();
-        int randomNum = rand.nextInt(seed);
-        return randomNum;
-    }
-
 }
