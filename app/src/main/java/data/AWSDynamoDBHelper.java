@@ -21,12 +21,12 @@ import www.ntej.com.simplenotes.NotesDO;
 import static android.content.ContentValues.TAG;
 
 /**
- * Created by hz7d7v on 1/19/18.
+ * Amazon Web services DynamoDB helper class - Singleton
  */
 
 public class AWSDynamoDBHelper {
 
-    DynamoDBMapper dynamoDBMapper;
+    private DynamoDBMapper dynamoDBMapper;
 
     private static AWSDynamoDBHelper awsDynamoDBHelper = null;
 
@@ -42,6 +42,11 @@ public class AWSDynamoDBHelper {
         return awsDynamoDBHelper;
     }
 
+    /**
+     * Create new entry in to DynamoDB
+     * @param note_id:unique id created for the new note
+     * @param text:Note content
+     */
     public void createNote(String note_id, String text) {
         final NotesDO notesDO = new NotesDO();
 
@@ -60,6 +65,12 @@ public class AWSDynamoDBHelper {
 
     }
 
+
+    /**
+     * Update the existing item in DynamoDB
+     * @param note_id: id of edited note
+     * @param updatedText: changed note content
+     */
     public void updateNote(String note_id, String updatedText) {
         final NotesDO notesDO = new NotesDO();
 
@@ -79,8 +90,14 @@ public class AWSDynamoDBHelper {
 
     }
 
+    /**
+     * Async Task to delete item form DynamoDB
+     */
     public class DeleteNoteAsyncTask extends AsyncTask<String, Void, Void> {
 
+        /**
+         * callback
+         */
         private DeleteNoteAsyncTaskCompleted listener;
 
         public DeleteNoteAsyncTask(DeleteNoteAsyncTaskCompleted listener){
@@ -109,9 +126,14 @@ public class AWSDynamoDBHelper {
         }
     }
 
-
+    /**
+     * Asynctask to get allnotes from DynamoDB
+     */
     public class GetAllNotesAsyncTask extends AsyncTask<String, Void, ArrayList<NotesDO>> {
 
+        /**
+         * callback
+         */
         private GetAllNotesAsyncTaskCompleted listener;
 
         public GetAllNotesAsyncTask(GetAllNotesAsyncTaskCompleted listener){
@@ -129,12 +151,6 @@ public class AWSDynamoDBHelper {
 
             ArrayList<NotesDO> notesDOArrayList = new ArrayList<>();
 
-            final String[] PROJECTION_ALL = {
-                    "userId",
-                    "noteId",
-                    "content",
-                    "date"
-            };
             DynamoDBMapper dbMapper = dynamoDBMapper;
             NotesDO template = new NotesDO();
             template.setUserId(AWSProvider.getInstance().getIdentityManager().getCachedUserID());
@@ -158,7 +174,10 @@ public class AWSDynamoDBHelper {
         }
     }
 
-    public void createDynamoDBMapperClient() {
+    /**
+     * creates the dynamoDB client
+     */
+    private void createDynamoDBMapperClient() {
         AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(AWSMobileClient.getInstance().getCredentialsProvider());
         this.dynamoDBMapper = DynamoDBMapper.builder()
                 .dynamoDBClient(dynamoDBClient)

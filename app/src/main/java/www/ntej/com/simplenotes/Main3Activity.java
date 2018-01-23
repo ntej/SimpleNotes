@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import data.AWSDynamoDBHelper;
 import data.dynamoDBhelperAsyncTaskInterfaces.DeleteNoteAsyncTaskCompleted;
-import model.CommonMethods;
+import model.Util;
 import ntej.time.UTCTimeGenerator;
 
 public class Main3Activity extends AppCompatActivity implements DeleteNoteAsyncTaskCompleted {
@@ -17,8 +17,6 @@ public class Main3Activity extends AppCompatActivity implements DeleteNoteAsyncT
     private String noteId;
     private String noteDate;
     private String initialNoteText;
-    //private boolean notesDeletedFromToolBar = false;
-    //private DatabaseHandler dbh;
     private AWSDynamoDBHelper awsDynamoDBHelper;
     private EditText existingNoteEditText;
     private TextView datePan;
@@ -29,7 +27,6 @@ public class Main3Activity extends AppCompatActivity implements DeleteNoteAsyncT
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
 
-        //dbh = new DatabaseHandler(this);
         awsDynamoDBHelper = AWSDynamoDBHelper.getAwsDynamoDBHelper();
 
         existingNoteEditText = (EditText) findViewById(R.id.notepad2);
@@ -45,7 +42,7 @@ public class Main3Activity extends AppCompatActivity implements DeleteNoteAsyncT
         UTCTimeGenerator utcTimeGenerator = new UTCTimeGenerator(Double.doubleToLongBits(notepadObject.getDate()));
 
         noteId = notepadObject.getNoteId();
-        noteDate = utcTimeGenerator.getTime()+" "+utcTimeGenerator.getMonthandDate();
+        noteDate = utcTimeGenerator.getTime() + " " + utcTimeGenerator.getMonthandDate();
 
 
         datePan.setText("Last Edited on " + noteDate);
@@ -71,7 +68,7 @@ public class Main3Activity extends AppCompatActivity implements DeleteNoteAsyncT
 
 
         if (textChanged()) {
-            if (!CommonMethods.editTextIsEmpty(existingNoteEditText.getText().toString())) {
+            if (!Util.editTextIsEmpty(existingNoteEditText.getText().toString())) {
 
                 awsDynamoDBHelper.updateNote(noteId, existingNoteEditText.getText().toString());
 

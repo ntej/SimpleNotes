@@ -3,11 +3,9 @@ package www.ntej.com.simplenotes;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -30,7 +28,6 @@ public class MainActivity extends AppCompatActivity implements GetAllNotesAsyncT
     private ArrayList<NotesDO> noteslistobjects = new ArrayList<>();
     private Toolbar toolbar;
     private ListView noteslistview;
-    //private FloatingActionButton fab;
     private ImageButton newNoteButton;
     private DeleteNoteAsyncTaskCompleted listener;
 
@@ -41,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements GetAllNotesAsyncT
         initialSetup();
     }
 
-    public void initialSetup(){
+    public void initialSetup() {
 
         dynamoDBHelper = AWSDynamoDBHelper.getAwsDynamoDBHelper();
 
@@ -70,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements GetAllNotesAsyncT
     public void onGetAllNotesTaskCompleted(ArrayList<NotesDO> notesDOArrayList) {
 
         noteslistobjects.clear();
-        for(int i =0; i<notesDOArrayList.size();i++){
+        for (int i = 0; i < notesDOArrayList.size(); i++) {
             noteslistobjects.add(notesDOArrayList.get(i));
         }
         adapter.notifyDataSetChanged();

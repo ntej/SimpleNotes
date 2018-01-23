@@ -13,7 +13,7 @@ import com.amazonaws.regions.Regions;
 import aws.AWSProvider;
 
 /**
- * Created by hz7d7v on 1/19/18.
+ * ApplicationClass
  */
 
 public class SimpleNotesApplication extends MultiDexApplication {
