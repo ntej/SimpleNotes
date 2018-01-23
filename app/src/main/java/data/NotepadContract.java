@@ -5,8 +5,9 @@ import android.provider.BaseColumns;
 /**
  * Created by navatejareddy on 10/29/16.
  */
-
+@Deprecated
 public final class NotepadContract {
+
 
     private NotepadContract() {
     }

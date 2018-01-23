@@ -43,7 +43,7 @@
                     android:paddingRight="@dimen/note_pad_right_padding"
                     android:paddingBottom="@dimen/note_pad_bottom_padding"
                     android:textAlignment="textStart"
-                    android:textSize="40sp"/>
+                    android:textSize="60sp"/>
             </ScrollView>
         </RelativeLayout>
 

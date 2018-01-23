@@ -6,6 +6,7 @@ import java.io.Serializable;
  * Created by navatejareddy on 10/29/16.
  */
 
+@Deprecated
 public class NotepadContent implements Serializable {
 
     private static final long serialVersionUID = 10L;

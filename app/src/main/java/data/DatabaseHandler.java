@@ -16,6 +16,7 @@ import ntej.time.UTCTimeGenerator;
  * Created by navatejareddy on 10/29/16.
  */
 
+@Deprecated
 public class DatabaseHandler extends SQLiteOpenHelper  {
 
 
@@ -100,7 +101,7 @@ public class DatabaseHandler extends SQLiteOpenHelper  {
 
                 timeInMilliseconds = c.getLong(c.getColumnIndexOrThrow(NotepadContract.NotepadEntry.DATE));
 
-                //Library by ntej. Check intellij IDE project for more details
+                //Library
                 UTCTimeGenerator utcTimeGenerator = new UTCTimeGenerator(timeInMilliseconds);
 
                 notepadContent.setDateAndTime(utcTimeGenerator.getMonthandDate()+" at " +utcTimeGenerator.getTime());

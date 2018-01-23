@@ -1,36 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
+    android:layout_height="260dp"
     android:background="@drawable/list_selector_action"
     android:orientation="horizontal"
     android:paddingTop="5dp">
 
-    <RelativeLayout
-        android:id="@+id/contentBody"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/noteTextView"
-        android:layout_width="match_parent"
-        android:layout_height="60sp"
-        android:text="Portion of Note text"
-        android:textSize="40sp"
-        android:textColor="@color/colorNoteText"
-        android:paddingLeft="22dp"
-        />
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/contentBody"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
 
-    <TextView
-        android:id="@+id/dateTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/noteTextView"
-        android:text="Date goes here"
-        android:textSize="20sp"
-        android:textColor="@color/colorNoteDate"
-        android:paddingLeft="22dp"
-        />
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/noteTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_marginLeft="22dp"
+            android:text="Portion of Note text"
+            android:textColor="@color/colorNoteText"
+            android:textSize="60sp" />
+
+
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/noteTextView"
+            android:layout_marginLeft="22dp"
+            android:text="Date goes here"
+            android:textColor="@color/colorNoteDate"
+            android:textSize="30sp" />
+
+        <ImageButton
+            android:id="@+id/open_note_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="40dp"
+            android:src="@drawable/open_with_button"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            />
+
+    <!--</RelativeLayout>-->
 
 </RelativeLayout>
