@@ -10,7 +10,7 @@ import com.amazonaws.mobileconnectors.pinpoint.PinpointConfiguration;
 import com.amazonaws.mobileconnectors.pinpoint.PinpointManager;
 
 /**
- * Created by hz7d7v on 1/19/18.
+ * AWSProvider class
  */
 
 public class AWSProvider {
