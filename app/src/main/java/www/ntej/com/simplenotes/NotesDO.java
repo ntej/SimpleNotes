@@ -17,7 +17,7 @@ public class NotesDO implements Serializable, Comparable<NotesDO>{
     private String _userId;
     private String _noteId;
     private String _content;
-    private Double _date;
+    private Long _date;
 
     @DynamoDBHashKey(attributeName = "userId")
     @DynamoDBIndexHashKey(attributeName = "userId", globalSecondaryIndexName = "DateSorted")
@@ -49,16 +49,16 @@ public class NotesDO implements Serializable, Comparable<NotesDO>{
     }
 
     @DynamoDBAttribute(attributeName = "date")
-    public Double getDate() {
+    public Long getDate() {
         return _date;
     }
 
-    public void setDate(final Double _date) {
+    public void setDate(final Long _date) {
         this._date = _date;
     }
 
     @Override
     public int compareTo(@NonNull NotesDO o) {
-        return o.getDate().compareTo(new Double(_date) );
+        return o.getDate().compareTo(_date);
     }
 }

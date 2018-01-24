@@ -53,7 +53,7 @@ public class AWSDynamoDBHelper {
         notesDO.setUserId(AWSProvider.getInstance().getIdentityManager().getCachedUserID());
         notesDO.setNoteId(note_id);
         notesDO.setContent(text);
-        notesDO.setDate((double)System.currentTimeMillis());
+        notesDO.setDate(System.currentTimeMillis());
 
         new Thread(new Runnable() {
             @Override
@@ -77,7 +77,7 @@ public class AWSDynamoDBHelper {
         notesDO.setUserId(AWSProvider.getInstance().getIdentityManager().getCachedUserID());
         notesDO.setNoteId(note_id);
         notesDO.setContent(updatedText);
-        notesDO.setDate((double)System.currentTimeMillis());
+        notesDO.setDate(System.currentTimeMillis());
 
         new Thread(new Runnable() {
             @Override

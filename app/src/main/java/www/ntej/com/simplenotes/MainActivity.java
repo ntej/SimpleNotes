@@ -3,6 +3,7 @@ package www.ntej.com.simplenotes;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -29,6 +30,9 @@ public class MainActivity extends AppCompatActivity implements GetAllNotesAsyncT
     private Toolbar toolbar;
     private ListView noteslistview;
     private ImageButton newNoteButton;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     private DeleteNoteAsyncTaskCompleted listener;
 
     @Override
@@ -49,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements GetAllNotesAsyncT
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         newNoteButton = (ImageButton) findViewById(R.id.new_button);
         newNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +64,14 @@ public class MainActivity extends AppCompatActivity implements GetAllNotesAsyncT
         listener = this;
 
         setupSlideToSwipeListView();
+
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                startGetAllNotesTask();
+            }
+        });
     }
 
     @Override
@@ -72,12 +83,18 @@ public class MainActivity extends AppCompatActivity implements GetAllNotesAsyncT
         }
         adapter.notifyDataSetChanged();
 
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        startGetAllNotesTask();
+    }
+
+    public void startGetAllNotesTask() {
         dynamoDBHelper.new GetAllNotesAsyncTask(this).execute(AWSProvider.getInstance().getIdentityManager().getCachedUserID());
+
     }
 
     public void setupSlideToSwipeListView() {
@@ -111,4 +128,5 @@ public class MainActivity extends AppCompatActivity implements GetAllNotesAsyncT
     public void onDeleteTaskCompleted() {
         Toast.makeText(this, "Notes Deleted", Toast.LENGTH_SHORT).show();
     }
+
 }

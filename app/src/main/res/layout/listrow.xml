@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginRight="40dp"
-            android:src="@drawable/open_with_button"
+            android:src="@drawable/edit_note_button"
             android:background="?attr/selectableItemBackgroundBorderless"
             />
 

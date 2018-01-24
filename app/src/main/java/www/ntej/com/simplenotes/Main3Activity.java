@@ -7,6 +7,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+
 import data.AWSDynamoDBHelper;
 import data.dynamoDBhelperAsyncTaskInterfaces.DeleteNoteAsyncTaskCompleted;
 import model.Util;
@@ -15,7 +17,6 @@ import ntej.time.UTCTimeGenerator;
 public class Main3Activity extends AppCompatActivity implements DeleteNoteAsyncTaskCompleted {
 
     private String noteId;
-    private String noteDate;
     private String initialNoteText;
     private AWSDynamoDBHelper awsDynamoDBHelper;
     private EditText existingNoteEditText;
@@ -39,13 +40,12 @@ public class Main3Activity extends AppCompatActivity implements DeleteNoteAsyncT
         initialNoteText = notepadObject.getContent();
         existingNoteEditText.setText(initialNoteText);
 
-        UTCTimeGenerator utcTimeGenerator = new UTCTimeGenerator(Double.doubleToLongBits(notepadObject.getDate()));
-
         noteId = notepadObject.getNoteId();
-        noteDate = utcTimeGenerator.getTime() + " " + utcTimeGenerator.getMonthandDate();
+
+        UTCTimeGenerator utcTimeGenerator = new UTCTimeGenerator(notepadObject.getDate());
 
 
-        datePan.setText("Last Edited on " + noteDate);
+        datePan.setText("Last Edited on " + utcTimeGenerator.getTime()+" "+utcTimeGenerator.getMonthandDate());
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

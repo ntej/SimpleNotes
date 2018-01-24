@@ -66,9 +66,9 @@ public class CustomListViewAdapter extends ArrayAdapter<NotesDO> {
             holder.noteText.setText(previewContent);
         }
 
-        UTCTimeGenerator utcTimeGenerator = new UTCTimeGenerator(Double.doubleToLongBits(holder.notepadObject.getDate()));
+        UTCTimeGenerator utcTimeGenerator = new UTCTimeGenerator(holder.notepadObject.getDate());
 
-        holder.noteDate.setText(utcTimeGenerator.getTime() + " " + utcTimeGenerator.getMonthandDate());
+        holder.noteDate.setText(utcTimeGenerator.getMonthandDate() + " at " + utcTimeGenerator.getTime());
 
         final ViewHolder finalHolder = holder;
 
