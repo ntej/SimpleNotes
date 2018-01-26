@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SimpleNotes</string>
+    <string name="app_name">GMNotes</string>
     <string name="action_settings">Settings</string>
 
     <!--toolbar strings-->
