@@ -19,7 +19,8 @@
             android:layout_marginLeft="22dp"
             android:text="Portion of Note text"
             android:textColor="@color/colorNoteText"
-            android:textSize="60sp" />
+            android:textSize="60sp"
+            />
 
 
         <TextView
@@ -32,6 +33,15 @@
             android:textColor="@color/colorNoteDate"
             android:textSize="30sp" />
 
+     <ImageButton
+         android:id="@+id/text_to_speech"
+         android:src="@drawable/text_to_voice"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:background="?attr/selectableItemBackgroundBorderless"
+         android:layout_alignRight="@+id/open_note_btn"
+         android:layout_marginRight="150dp"/>
+
         <ImageButton
             android:id="@+id/open_note_btn"
             android:layout_width="wrap_content"
@@ -41,6 +51,8 @@
             android:src="@drawable/edit_note_button"
             android:background="?attr/selectableItemBackgroundBorderless"
             />
+
+
 
     <!--</RelativeLayout>-->
 
