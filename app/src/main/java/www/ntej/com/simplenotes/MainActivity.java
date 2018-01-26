@@ -3,6 +3,7 @@ package www.ntej.com.simplenotes;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +13,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import aws.AWSProvider;
 import customListeners.SwipeDismissListViewTouchListener;
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements GetAllNotesAsyncT
     private Toolbar toolbar;
     private ListView noteslistview;
     private ImageButton newNoteButton;
+
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -72,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements GetAllNotesAsyncT
                 startGetAllNotesTask();
             }
         });
+
     }
 
     @Override
